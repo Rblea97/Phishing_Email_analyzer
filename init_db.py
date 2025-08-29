@@ -38,7 +38,7 @@ def create_database(db_path="phishing_detector.db"):
             last_login TIMESTAMP
         )
     ''')
-    print("✓ Created users table")
+    print("Created users table")
     
     # Create email analyses table
     cursor.execute('''
@@ -58,7 +58,7 @@ def create_database(db_path="phishing_detector.db"):
             FOREIGN KEY (user_id) REFERENCES users (id)
         )
     ''')
-    print("✓ Created email_analyses table")
+    print("Created email_analyses table")
     
     # Create URL analyses cache table
     cursor.execute('''
@@ -73,7 +73,7 @@ def create_database(db_path="phishing_detector.db"):
             expires_at TIMESTAMP
         )
     ''')
-    print("✓ Created url_analyses table")
+    print("Created url_analyses table")
     
     # Create system metrics table
     cursor.execute('''
@@ -88,27 +88,27 @@ def create_database(db_path="phishing_detector.db"):
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
-    print("✓ Created system_metrics table")
+    print("Created system_metrics table")
     
     # Create indexes for better performance
     cursor.execute('CREATE INDEX ix_email_analyses_created_at ON email_analyses (created_at)')
     cursor.execute('CREATE INDEX ix_email_analyses_email_hash ON email_analyses (email_hash)')
     cursor.execute('CREATE INDEX ix_url_analyses_url_hash ON url_analyses (url_hash)')
     cursor.execute('CREATE INDEX ix_system_metrics_date ON system_metrics (date)')
-    print("✓ Created database indexes")
+    print("Created database indexes")
     
     # Insert sample data for testing
     cursor.execute('''
         INSERT INTO system_metrics (date, total_analyses, phishing_detected, accuracy_rate, avg_processing_time, api_costs)
         VALUES (date('now'), 0, 0, 0.0, 0.0, 0.0)
     ''')
-    print("✓ Inserted initial system metrics")
+    print("Inserted initial system metrics")
     
     # Commit changes and close
     conn.commit()
     conn.close()
     
-    print(f"\n✅ Database created successfully: {db_path}")
+    print(f"\nDatabase created successfully: {db_path}")
     print(f"   Tables: users, email_analyses, url_analyses, system_metrics")
     print(f"   Indexes: Performance optimized")
     print(f"   Ready for Phase 1 deployment!")
@@ -117,10 +117,10 @@ def verify_database(db_path="phishing_detector.db"):
     """Verify database structure"""
     
     if not os.path.exists(db_path):
-        print(f"❌ Database not found: {db_path}")
+        print(f"Database not found: {db_path}")
         return False
     
-    print(f"\n🔍 Verifying database: {db_path}")
+    print(f"\nVerifying database: {db_path}")
     
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -138,17 +138,17 @@ def verify_database(db_path="phishing_detector.db"):
     # Check if all expected tables exist
     missing_tables = set(expected_tables) - set(found_tables)
     if missing_tables:
-        print(f"   ❌ Missing tables: {missing_tables}")
+        print(f"   Missing tables: {missing_tables}")
         return False
     
     # Check table structures
     for table in expected_tables:
         cursor.execute(f"PRAGMA table_info({table})")
         columns = cursor.fetchall()
-        print(f"   ✓ {table}: {len(columns)} columns")
+        print(f"   {table}: {len(columns)} columns")
     
     conn.close()
-    print("   ✅ Database structure verified!")
+    print("   Database structure verified!")
     return True
 
 if __name__ == "__main__":
@@ -168,10 +168,10 @@ if __name__ == "__main__":
         # Verify creation
         verify_database(db_path)
         
-        print("\n🚀 Ready to run Flask application!")
+        print("\nReady to run Flask application!")
         print(f"   Run: python app.py")
         print(f"   Or: flask run")
         
     except Exception as e:
-        print(f"\n❌ Error creating database: {str(e)}")
+        print(f"\nError creating database: {str(e)}")
         sys.exit(1)
