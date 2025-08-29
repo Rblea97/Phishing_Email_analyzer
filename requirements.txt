@@ -8,6 +8,10 @@ python-dotenv==1.0.0
 # File Type Detection
 python-magic==0.4.27
 
+# Email Parsing & HTML Processing (Phase 2)
+html2text==2020.1.16
+email-validator==2.1.0
+
 # Database
 sqlite3
 

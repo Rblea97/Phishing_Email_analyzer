@@ -1,0 +1,31 @@
+Return-Path: <notifications@fake-service123.com>
+Delivered-To: target@company.com
+Received: from mail.fake-service123.com ([203.45.67.89])
+	by mx.company.com with ESMTP id DEF456
+	for <target@company.com>; Tue, 16 Jan 2024 09:15:45 +0000
+Authentication-Results: mx.company.com; spf=pass smtp.mailfrom=notifications@fake-service123.com; dkim=pass header.d=fake-service123.com; dmarc=pass
+Message-ID: <service-notification-54321@fake-service123.com>
+Date: Tue, 16 Jan 2024 09:15:45 +0000
+From: "Microsoft Office 365" <notifications@fake-service123.com>
+Reply-To: support@different-domain.net
+To: target@company.com
+Subject: Action Required: Update Your Office 365 Settings
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+Hello,
+
+Your Office 365 subscription requires attention. We've noticed some configuration issues that need to be resolved.
+
+Please review your account settings by clicking the link below:
+
+https://office365-update.fake-service123.com/login
+
+If you don't take action within 48 hours, some features may be disabled.
+
+This message was sent from Microsoft Office 365 security monitoring.
+
+Best regards,
+Microsoft Support Team
+
+Note: This email was sent to ensure your account security. Please verify your settings at your earliest convenience.

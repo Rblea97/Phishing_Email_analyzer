@@ -1,0 +1,38 @@
+Return-Path: <invoice@trusted-vendor.com>
+Delivered-To: finance@company.com
+Received: from smtp.untrusted-sender.net ([192.168.50.100])
+	by mx.company.com with ESMTP id GHI789
+	for <finance@company.com>; Wed, 17 Jan 2024 13:22:10 +0000
+Authentication-Results: mx.company.com; spf=softfail smtp.mailfrom=invoice@trusted-vendor.com; dkim=fail reason="signature verification failed"; dmarc=fail
+Message-ID: <invoice-payment-11223@trusted-vendor.com>
+Date: Wed, 17 Jan 2024 13:22:10 +0000
+From: "Trusted Business Vendor" <invoice@trusted-vendor.com>
+To: finance@company.com
+Subject: Invoice Payment Due - Account #TB-2024-0117
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+Dear Finance Team,
+
+Please find attached the invoice for services rendered in December 2024.
+
+Invoice Details:
+- Invoice Number: TB-2024-0117
+- Amount Due: $2,450.00
+- Payment Terms: Net 30
+- Due Date: February 16, 2024
+
+Payment can be made through our secure portal:
+https://payments.trusted-vendor.com/invoice/TB-2024-0117
+
+For any questions regarding this invoice, please contact our billing department at billing@trusted-vendor.com or call 1-800-TRUSTED.
+
+Please ensure payment is processed by the due date to avoid late fees.
+
+Thank you for your continued business.
+
+Best regards,
+Accounts Receivable Department
+Trusted Business Vendor Inc.
+
+This invoice was generated automatically from our billing system.

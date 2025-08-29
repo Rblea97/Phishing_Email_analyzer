@@ -1,0 +1,47 @@
+Return-Path: <security@аррӏе.com>
+Delivered-To: user@example.com
+Received: from mail.suspicious-domain.com ([198.51.100.45])
+	by mx.example.com with ESMTP id JKL012
+	for <user@example.com>; Thu, 18 Jan 2024 16:30:22 +0000
+Authentication-Results: mx.example.com; spf=pass smtp.mailfrom=security@аррӏе.com; dkim=pass header.d=suspicious-domain.com; dmarc=pass
+Message-ID: <apple-security-67890@аррӏе.com>
+Date: Thu, 18 Jan 2024 16:30:22 +0000
+From: "Apple Security" <security@аррӏе.com>
+To: user@example.com
+Subject: Apple ID Security Verification Required
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<body>
+<div style="font-family: Arial, sans-serif;">
+
+<h2>Apple ID Security Notice</h2>
+
+<p>Dear Apple Customer,</p>
+
+<p>We've detected unusual activity associated with your Apple ID. For your security, we need you to verify your account information.</p>
+
+<p><strong>Suspicious Activity Detected:</strong></p>
+<ul>
+<li>Login attempt from unrecognized device</li>
+<li>Location: Eastern Europe</li>
+<li>Time: Today at 3:45 PM</li>
+</ul>
+
+<p>Please verify your Apple ID immediately to secure your account:</p>
+
+<p><a href="https://аррӏе.com/id/verify" style="background-color: #007AFF; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">Verify Apple ID</a></p>
+
+<p>If you don't recognize this activity, please secure your account immediately by visiting: https://аррӏе.com/security</p>
+
+<p>Alternative verification: <a href="https://xn--e1afmkfd.com/verify">Click here</a></p>
+
+<p>Thank you for helping us keep your Apple ID secure.</p>
+
+<p>Apple Security Team<br>
+<small>This is an automated security message from Apple.</small></p>
+
+</div>
+</body>
+</html>

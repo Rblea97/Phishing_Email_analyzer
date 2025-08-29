@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis History - AI-Powered Phishing Detection{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h3">
+                    <i class="fas fa-history me-2"></i>
+                    Analysis History
+                </h1>
+                <p class="text-muted mb-0">Recent email analyses and detection results</p>
+            </div>
+            <div>
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>New Analysis
+                </a>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row mb-4">
+            {% set total_count = analyses | length %}
+            {% set phishing_count = analyses | selectattr('label', 'equalto', 'Likely Phishing') | list | length %}
+            {% set suspicious_count = analyses | selectattr('label', 'equalto', 'Suspicious') | list | length %}
+            {% set safe_count = analyses | selectattr('label', 'equalto', 'Likely Safe') | list | length %}
+            
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="display-6 text-primary mb-2">{{ total_count }}</div>
+                        <h6 class="card-title text-muted">Total Analyses</h6>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="display-6 text-danger mb-2">{{ phishing_count }}</div>
+                        <h6 class="card-title text-muted">Likely Phishing</h6>
+                        {% if total_count > 0 %}
+                            <small class="text-muted">{{ ((phishing_count / total_count) * 100) | round(1) }}%</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="display-6 text-warning mb-2">{{ suspicious_count }}</div>
+                        <h6 class="card-title text-muted">Suspicious</h6>
+                        {% if total_count > 0 %}
+                            <small class="text-muted">{{ ((suspicious_count / total_count) * 100) | round(1) }}%</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <div class="display-6 text-success mb-2">{{ safe_count }}</div>
+                        <h6 class="card-title text-muted">Likely Safe</h6>
+                        {% if total_count > 0 %}
+                            <small class="text-muted">{{ ((safe_count / total_count) * 100) | round(1) }}%</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analyses Table -->
+        {% if analyses %}
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-table me-2"></i>
+                    Recent Analyses ({{ analyses | length }})
+                </h5>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-outline-secondary" onclick="filterTable('all')">All</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="filterTable('phishing')">Phishing</button>
+                    <button type="button" class="btn btn-outline-warning" onclick="filterTable('suspicious')">Suspicious</button>
+                    <button type="button" class="btn btn-outline-success" onclick="filterTable('safe')">Safe</button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="analysesTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Filename</th>
+                                <th>Upload Date</th>
+                                <th>Size</th>
+                                <th>Risk Score</th>
+                                <th>Classification</th>
+                                <th>Rules Fired</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for analysis in analyses %}
+                            <tr data-label="{{ analysis.label }}" data-score="{{ analysis.score }}">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-envelope me-2 text-muted"></i>
+                                        <div>
+                                            <strong>{{ analysis.filename | truncate(30) }}</strong>
+                                            {% if analysis.filename | length > 30 %}
+                                                <span class="text-muted" title="{{ analysis.filename }}">[...]</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <small>{{ analysis.uploaded_at }}</small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ (analysis.size_bytes / 1024) | round(1) }} KB</span>
+                                </td>
+                                <td>
+                                    {% set score = analysis.score %}
+                                    {% if score >= 60 %}
+                                        {% set badge_class = "bg-danger" %}
+                                    {% elif score >= 30 %}
+                                        {% set badge_class = "bg-warning" %}
+                                    {% else %}
+                                        {% set badge_class = "bg-success" %}
+                                    {% endif %}
+                                    
+                                    <div class="d-flex align-items-center">
+                                        <span class="badge {{ badge_class }} me-2">{{ score }}</span>
+                                        <div class="progress flex-grow-1" style="height: 8px; min-width: 50px;">
+                                            <div class="progress-bar {{ badge_class }}" 
+                                                 style="width: {{ score }}%"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% set label = analysis.label %}
+                                    {% if label == "Likely Phishing" %}
+                                        {% set label_class = "text-danger" %}
+                                        {% set label_icon = "fas fa-exclamation-triangle" %}
+                                    {% elif label == "Suspicious" %}
+                                        {% set label_class = "text-warning" %}
+                                        {% set label_icon = "fas fa-exclamation-circle" %}
+                                    {% else %}
+                                        {% set label_class = "text-success" %}
+                                        {% set label_icon = "fas fa-shield-alt" %}
+                                    {% endif %}
+                                    
+                                    <span class="{{ label_class }}">
+                                        <i class="{{ label_icon }} me-1"></i>{{ label }}
+                                    </span>
+                                    <br>
+                                    <small class="text-muted">{{ (analysis.confidence * 100) | round(1) }}% confidence</small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-info">{{ analysis.rules_fired }}</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a href="{{ url_for('view_analysis', email_id=analysis.id) }}" 
+                                           class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        {% if analyses | length >= 50 %}
+        <div class="text-center mt-3">
+            <small class="text-muted">
+                <i class="fas fa-info-circle me-1"></i>
+                Showing most recent 50 analyses. Total database may contain more records.
+            </small>
+        </div>
+        {% endif %}
+        
+        {% else %}
+        <!-- Empty State -->
+        <div class="text-center py-5">
+            <div class="mb-4">
+                <i class="fas fa-inbox fa-5x text-muted"></i>
+            </div>
+            <h3 class="text-muted">No Analyses Yet</h3>
+            <p class="text-muted mb-4">
+                Upload your first email to start building your analysis history.
+            </p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-upload me-2"></i>Upload Email
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Filter table by classification
+function filterTable(type) {
+    const table = document.getElementById('analysesTable');
+    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    
+    // Update button states
+    const buttons = document.querySelectorAll('.btn-group button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const label = row.getAttribute('data-label').toLowerCase();
+        
+        let show = false;
+        
+        switch(type) {
+            case 'all':
+                show = true;
+                break;
+            case 'phishing':
+                show = label.includes('phishing');
+                break;
+            case 'suspicious':
+                show = label.includes('suspicious');
+                break;
+            case 'safe':
+                show = label.includes('safe');
+                break;
+        }
+        
+        row.style.display = show ? '' : 'none';
+    }
+}
+
+// Sort table by column
+function sortTable(column) {
+    // Implementation for sorting would go here
+    console.log('Sort by:', column);
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    // Set "All" filter as active by default
+    const allButton = document.querySelector('.btn-group button[onclick*="all"]');
+    if (allButton) {
+        allButton.classList.add('active');
+    }
+    
+    // Add hover effects to score progress bars
+    const progressBars = document.querySelectorAll('.progress-bar');
+    progressBars.forEach(bar => {
+        const parent = bar.closest('tr');
+        parent.addEventListener('mouseenter', () => {
+            bar.style.opacity = '0.8';
+        });
+        parent.addEventListener('mouseleave', () => {
+            bar.style.opacity = '1';
+        });
+    });
+});
+</script>
+{% endblock %}

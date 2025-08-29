@@ -1,0 +1,50 @@
+Return-Path: <admin@secure-bank-verification.top>
+Delivered-To: victim@example.com
+Received: from unknown-server.suspicious.xyz ([45.123.45.67])
+	by mx.example.com with ESMTP id XYZ999
+	for <victim@example.com>; Mon, 15 Jan 2024 14:45:23 +0000
+Authentication-Results: mx.example.com; spf=fail smtp.mailfrom=admin@secure-bank-verification.top; dkim=none; dmarc=fail
+Message-ID: <urgent-security-alert-98765@secure-bank-verification.top>
+Date: Mon, 15 Jan 2024 14:45:23 +0000
+From: "Bank of America Security Team" <admin@secure-bank-verification.top>
+Reply-To: verify-account@temp-verification.click
+To: victim@example.com
+Subject: URGENT: Your Account Will Be Suspended - Immediate Action Required
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<body>
+<div style="background-color: red; color: white; padding: 10px; font-weight: bold;">
+URGENT SECURITY ALERT - EXPIRES TODAY!
+</div>
+
+<p>Dear Valued Customer,</p>
+
+<p><strong>We have detected suspicious activity on your account that requires immediate verification.</strong></p>
+
+<p>Your online banking access will be suspended in 24 hours unless you verify your account immediately.</p>
+
+<h3 style="color: red;">IMMEDIATE ACTION REQUIRED:</h3>
+<ul>
+<li>Unusual login attempts from foreign IP addresses</li>
+<li>Multiple failed password attempts</li>
+<li>Potential unauthorized access detected</li>
+</ul>
+
+<p><strong>Click here to verify your account NOW:</strong></p>
+<p><a href="http://bit.ly/bank-verify-urgent" style="background-color: red; color: white; padding: 15px; text-decoration: none; font-size: 18px;">VERIFY ACCOUNT - EXPIRES TODAY</a></p>
+
+<p>Alternative verification link: <a href="https://secure-verification.top/login?ref=urgent">https://secure-verification.top/login?ref=urgent</a></p>
+
+<p><em>If you do not verify within 24 hours, your account will be permanently suspended and you will lose access to your funds.</em></p>
+
+<p>For immediate assistance, download the attached document with your account details: <a href="http://tinyurl.com/account-statement">Account_Statement_Urgent.pdf</a></p>
+
+<p>This message was sent to verify your identity. Please do not reply to this email.</p>
+
+<p>Bank of America Security Department</p>
+<p><small>Reference ID: URG-SEC-2024-9876</small></p>
+
+</body>
+</html>

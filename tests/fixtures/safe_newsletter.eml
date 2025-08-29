@@ -1,0 +1,72 @@
+Return-Path: <newsletter@example-company.com>
+Delivered-To: user@example.com
+Received: from mail.example-company.com ([192.168.1.100])
+	by mx.example.com with ESMTP id ABC123
+	for <user@example.com>; Mon, 15 Jan 2024 10:30:00 +0000
+Authentication-Results: mx.example.com; spf=pass smtp.mailfrom=newsletter@example-company.com; dkim=pass header.d=example-company.com; dmarc=pass
+Message-ID: <newsletter-202401151030@example-company.com>
+Date: Mon, 15 Jan 2024 10:30:00 +0000
+From: "Example Company Newsletter" <newsletter@example-company.com>
+To: user@example.com
+Subject: Weekly Tech Updates - New Product Features
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="boundary-123"
+
+--boundary-123
+Content-Type: text/plain; charset=UTF-8
+
+Hello John,
+
+We hope you're having a great week! Here are the latest updates from Example Company:
+
+NEW FEATURES:
+- Enhanced dashboard analytics
+- Improved mobile app performance  
+- New collaboration tools
+
+UPCOMING EVENTS:
+- Webinar: "Future of Technology" - January 25th, 2024
+- Product Demo Session - February 1st, 2024
+
+Visit our website to learn more: https://www.example-company.com/updates
+
+If you have any questions, feel free to contact our support team.
+
+Best regards,
+The Example Company Team
+
+To unsubscribe, visit: https://www.example-company.com/unsubscribe?user=abc123
+
+--boundary-123
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<body>
+<h2>Hello John,</h2>
+<p>We hope you're having a great week! Here are the latest updates from Example Company:</p>
+
+<h3>NEW FEATURES:</h3>
+<ul>
+<li>Enhanced dashboard analytics</li>
+<li>Improved mobile app performance</li>
+<li>New collaboration tools</li>
+</ul>
+
+<h3>UPCOMING EVENTS:</h3>
+<ul>
+<li>Webinar: "Future of Technology" - January 25th, 2024</li>
+<li>Product Demo Session - February 1st, 2024</li>
+</ul>
+
+<p><a href="https://www.example-company.com/updates">Visit our website to learn more</a></p>
+
+<p>If you have any questions, feel free to contact our support team.</p>
+
+<p>Best regards,<br>
+The Example Company Team</p>
+
+<p><small><a href="https://www.example-company.com/unsubscribe?user=abc123">Unsubscribe</a></small></p>
+</body>
+</html>
+
+--boundary-123--
