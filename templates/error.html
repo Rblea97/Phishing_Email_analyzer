@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Error {{ error_code }} - AI-Powered Phishing Detection{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 text-center">
+        <div class="card">
+            <div class="card-body p-5">
+                <!-- Error Icon -->
+                <div class="text-danger mb-4">
+                    {% if error_code == 404 %}
+                        <i class="fas fa-search fa-5x"></i>
+                    {% elif error_code == 500 %}
+                        <i class="fas fa-exclamation-triangle fa-5x"></i>
+                    {% else %}
+                        <i class="fas fa-exclamation-circle fa-5x"></i>
+                    {% endif %}
+                </div>
+                
+                <!-- Error Code -->
+                <h1 class="display-1 text-primary mb-3">{{ error_code }}</h1>
+                
+                <!-- Error Message -->
+                <h3 class="mb-4">
+                    {% if error_code == 404 %}
+                        Page Not Found
+                    {% elif error_code == 500 %}
+                        Internal Server Error
+                    {% else %}
+                        Error Occurred
+                    {% endif %}
+                </h3>
+                
+                <p class="text-muted mb-4">
+                    {% if error_code == 404 %}
+                        The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.
+                    {% elif error_code == 500 %}
+                        We're experiencing some technical difficulties. Our team has been notified and is working on a fix.
+                    {% else %}
+                        {{ error_message }}
+                    {% endif %}
+                </p>
+                
+                <!-- Action Buttons -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                        <i class="fas fa-home me-2"></i>
+                        Go Home
+                    </a>
+                    
+                    <button class="btn btn-outline-secondary" onclick="history.back()">
+                        <i class="fas fa-arrow-left me-2"></i>
+                        Go Back
+                    </button>
+                </div>
+                
+                <!-- Additional Help -->
+                {% if error_code == 500 %}
+                <div class="mt-4 p-3 bg-light rounded">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-2"></i>
+                        If this problem persists, please check the system status or contact support.
+                    </small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Quick Navigation -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-upload fa-2x text-primary mb-3"></i>
+                        <h5>Upload Email</h5>
+                        <p class="text-muted">Analyze emails for phishing threats</p>
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                            Upload Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-bar fa-2x text-success mb-3"></i>
+                        <h5>View Statistics</h5>
+                        <p class="text-muted">Check system usage and health</p>
+                        <a href="{{ url_for('stats') }}" class="btn btn-outline-success">
+                            View Stats
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Email - AI-Powered Phishing Detection{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Header -->
+        <div class="text-center mb-4">
+            <h1 class="display-6 mb-3">
+                <i class="fas fa-shield-alt text-primary me-2"></i>
+                Email Security Analysis
+            </h1>
+            <p class="lead text-muted">
+                Upload an email file for AI-powered phishing detection and security analysis
+            </p>
+        </div>
+
+        <!-- Upload Form -->
+        <div class="card">
+            <div class="card-body p-4">
+                <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+                    <div class="upload-area mb-4">
+                        <div class="file-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h5 class="mb-3">Drop your email file here or click to browse</h5>
+                        <p class="text-muted mb-3">
+                            Supported formats: <code>.eml</code>, <code>.txt</code>, <code>.msg</code>
+                            <br>
+                            Maximum file size: <strong>25MB</strong>
+                        </p>
+                        
+                        <input type="file" 
+                               name="file" 
+                               id="file" 
+                               accept=".eml,.txt,.msg" 
+                               required
+                               style="display: none;">
+                        
+                        <button type="button" 
+                                class="btn btn-outline-primary" 
+                                onclick="document.getElementById('file').click();">
+                            <i class="fas fa-folder-open me-2"></i>
+                            Choose File
+                        </button>
+                        
+                        <div class="mt-3">
+                            <span class="file-name text-muted"></span>
+                            <span class="file-size text-muted"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-search me-2"></i>
+                            Analyze Email
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- File Information (if uploaded) -->
+        {% if file_info %}
+        <div class="card mt-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-check-circle me-2"></i>
+                    File Upload Successful
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Filename:</strong> {{ file_info.filename }}</p>
+                        <p><strong>File Size:</strong> {{ file_info.size }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Analysis ID:</strong> #{{ file_info.analysis_id }}</p>
+                        <p><strong>File Hash:</strong> <code>{{ file_info.hash }}</code></p>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Analysis Status:</strong> Your email has been securely stored and is ready for analysis. 
+                    AI-powered detection will be available in the next phase of development.
+                </div>
+                
+                <div class="mt-3">
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-plus me-2"></i>
+                        Upload Another File
+                    </a>
+                    <a href="{{ url_for('stats') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-chart-bar me-2"></i>
+                        View Statistics
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Security Features -->
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="card feature-card text-center">
+                    <div class="card-body">
+                        <div class="text-primary mb-3">
+                            <i class="fas fa-lock fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">Secure Upload</h5>
+                        <p class="card-text text-muted">
+                            Files are validated and securely processed with strict size and type restrictions.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card feature-card text-center">
+                    <div class="card-body">
+                        <div class="text-success mb-3">
+                            <i class="fas fa-brain fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">AI Analysis</h5>
+                        <p class="card-text text-muted">
+                            Advanced machine learning models analyze emails for phishing indicators.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card feature-card text-center">
+                    <div class="card-body">
+                        <div class="text-warning mb-3">
+                            <i class="fas fa-chart-line fa-2x"></i>
+                        </div>
+                        <h5 class="card-title">Detailed Reports</h5>
+                        <p class="card-text text-muted">
+                            Get comprehensive analysis with risk scores and evidence breakdown.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Usage Instructions -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-question-circle me-2"></i>
+                    How It Works
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-upload text-primary me-2"></i>Step 1: Upload</h6>
+                        <p class="text-muted">Select and upload your email file (.eml, .txt, or .msg format)</p>
+                        
+                        <h6><i class="fas fa-cog text-primary me-2"></i>Step 2: Process</h6>
+                        <p class="text-muted">Our system securely parses and validates your email file</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-search text-primary me-2"></i>Step 3: Analyze</h6>
+                        <p class="text-muted">AI models examine headers, content, and URLs for threats</p>
+                        
+                        <h6><i class="fas fa-file-alt text-primary me-2"></i>Step 4: Report</h6>
+                        <p class="text-muted">Get detailed results with risk assessment and recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Additional client-side validation
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const fileInput = document.getElementById('file');
+        
+        form.addEventListener('submit', function(e) {
+            if (!fileInput.files.length) {
+                e.preventDefault();
+                alert('Please select a file to upload.');
+                return false;
+            }
+            
+            const file = fileInput.files[0];
+            const maxSize = 25 * 1024 * 1024; // 25MB
+            
+            if (file.size > maxSize) {
+                e.preventDefault();
+                alert('File is too large. Maximum size allowed is 25MB.');
+                return false;
+            }
+            
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Uploading...';
+        });
+    });
+</script>
+{% endblock %}

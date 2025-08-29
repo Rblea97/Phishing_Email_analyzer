@@ -1,0 +1,80 @@
+AI-Powered Phishing Detection MVP
+
+Project Overview:
+Develop an AI-powered phishing email detection system that demonstrates practical cybersecurity and machine learning skills through a working live demo. The project will progress iteratively:
+
+MVP Phase: Build a functional phishing detection web app using Flask, SQLite, and an API-based AI model (OpenAI GPT-4o-mini).
+
+Expansion Phases: Add transformer-based models (DistilBERT), URL scanning, enhanced visualization dashboards, and enterprise-style deployment practices.
+
+The purpose is to showcase an end-to-end security application with both technical depth and professional presentation quality, while maintaining cost-efficiency and accessibility.
+
+Level: Medium → Advanced (progressive build-up)
+Type of Project: AI + Cybersecurity Web Application
+Skills Required:
+
+Python (Flask/FastAPI, NLP libraries, email parsing)
+
+Machine Learning / Transformers (Hugging Face, DistilBERT)
+
+API integration (OpenAI, Safe Browsing, VirusTotal)
+
+Database management (SQLite → PostgreSQL)
+
+Deployment (Railway, Docker, Vercel)
+
+Secure development practices (JWT auth, bcrypt, environment variables, rate limiting)
+
+Key Features & Milestones
+
+Milestone 1 – MVP Foundation (Weeks 1–3)
+
+Flask web interface with email upload form
+
+Basic rule-based detection (headers, suspicious URL regex, urgency keywords)
+
+Secure environment variable management for API keys
+
+SQLite database to log email analysis results
+
+Deployed live on Railway (always-on demo for employers)
+
+Milestone 2 – AI Integration (Weeks 4–6)
+
+Integrate GPT-4o-mini API for phishing detection with structured JSON output
+
+Expand email parsing with Python email library
+
+Add training/testing with public phishing datasets (PhishTank, Hugging Face)
+
+Display model risk scores and evidence on web UI
+
+Milestone 3 – Advanced Detection (Weeks 7–9)
+
+Transition from API-only to local DistilBERT model for cost efficiency
+
+Add URL scanning (Google Safe Browsing, VirusTotal API)
+
+Implement simple visualization dashboard (charts showing detection confidence, phishing vs. safe stats)
+
+Milestone 4 – Production Readiness (Weeks 10–12)
+
+Dockerize for consistent deployment
+
+Optional FastAPI migration for async performance
+
+Add JWT-based authentication with bcrypt password hashing
+
+Expand to PostgreSQL for multi-user support
+
+Logging & monitoring system
+
+Professional documentation (README with BLUF, demo video, performance metrics)
+
+Client Information:
+
+Client: Self-directed (portfolio project)
+
+Stakeholder Goals: Build a compelling, technically rich project that demonstrates AI and security knowledge, while providing a live demo accessible to employers.
+
+Target Users: Employers and technical interviewers evaluating cybersecurity and applied AI capabilities.
