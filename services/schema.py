@@ -70,7 +70,9 @@ class AIResponseValidator:
     def __init__(self):
         self.schema = AI_RESPONSE_SCHEMA
 
-    def validate_response(self, response_data: Dict[str, Any]) -> tuple[bool, Optional[str]]:
+    def validate_response(
+        self, response_data: Dict[str, Any]
+    ) -> tuple[bool, Optional[str]]:
         """
         Validate AI response against schema
 
