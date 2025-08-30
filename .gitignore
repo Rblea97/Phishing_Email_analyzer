@@ -36,6 +36,7 @@ instance/
 *.db
 *.sqlite3
 phishing_detector.db
+*.db.phase*_backup_*
 
 # Uploaded files
 uploads/
@@ -125,3 +126,6 @@ cython_debug/
 
 # Static files (if using)
 staticfiles/
+
+# Temporary test files
+test_api_key.py

@@ -27,10 +27,15 @@
                     <span class="badge bg-secondary ms-2">{{ (analysis.email.size_bytes / 1024) | round(1) }} KB</span>
                     <br>
                     Analyzed: {{ analysis.email.analyzed_at }}
+                    {% if analysis.ai_analysis %}
+                        <span class="badge bg-info ms-2">
+                            <i class="fas fa-robot me-1"></i>AI Enhanced
+                        </span>
+                    {% endif %}
                 </p>
             </div>
             <div class="col-md-4 text-end">
-                <!-- Risk Score Display -->
+                <!-- Risk Score Display - Rule-Based by Default -->
                 <div class="card text-center">
                     <div class="card-body">
                         <div class="mb-2">
@@ -53,7 +58,9 @@
                                 <i class="{{ icon }} me-2"></i>{{ analysis.email.label }}
                             </h5>
                             <p class="card-text">
-                                Confidence: {{ (analysis.email.confidence * 100) | round(1) }}%
+                                Rule-Based Analysis
+                                <br>
+                                <small class="text-muted">Confidence: {{ (analysis.email.confidence * 100) | round(1) }}%</small>
                             </p>
                         </div>
                         
@@ -73,59 +80,233 @@
             </div>
         </div>
 
-        <!-- Evidence Analysis -->
-        {% if analysis.email.evidence %}
+        <!-- Phase 3: Analysis Tabs -->
         <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="card-title mb-0">
-                    <i class="fas fa-list-ul me-2"></i>
-                    Detection Evidence ({{ analysis.email.evidence | length }} rules triggered)
-                </h5>
-                <span class="badge bg-info">{{ analysis.email.rules_fired }} / {{ analysis.email.rules_checked }} rules fired</span>
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" id="analysisTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="rules-tab" data-bs-toggle="tab" data-bs-target="#rules" type="button" role="tab">
+                            <i class="fas fa-cogs me-2"></i>Rule-Based Detection
+                        </button>
+                    </li>
+                    {% if analysis.ai_analysis %}
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="ai-tab" data-bs-toggle="tab" data-bs-target="#ai" type="button" role="tab">
+                            <i class="fas fa-robot me-2"></i>AI Analysis
+                            {% if analysis.ai_analysis.success %}
+                                <span class="badge bg-success ms-1">✓</span>
+                            {% else %}
+                                <span class="badge bg-warning ms-1">⚠</span>
+                            {% endif %}
+                        </button>
+                    </li>
+                    {% else %}
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link disabled" disabled>
+                            <i class="fas fa-robot me-2"></i>AI Analysis
+                            <span class="badge bg-secondary ms-1">N/A</span>
+                        </button>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
-            <div class="card-body">
-                {% if analysis.email.evidence %}
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Rule</th>
-                                    <th>Description</th>
-                                    <th>Weight</th>
-                                    <th>Details</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for evidence in analysis.email.evidence %}
-                                <tr>
-                                    <td>
-                                        <code class="text-primary">{{ evidence.rule_id }}</code>
-                                    </td>
-                                    <td>{{ evidence.description }}</td>
-                                    <td>
-                                        <span class="badge bg-secondary">+{{ evidence.weight }}</span>
-                                    </td>
-                                    <td>
-                                        <small class="text-muted">{{ evidence.details }}</small>
-                                        {% if evidence.matched_content %}
-                                            <br><code class="text-dark">{{ evidence.matched_content | truncate(100) }}</code>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+            
+            <div class="tab-content" id="analysisTabContent">
+                <!-- Rule-Based Detection Tab -->
+                <div class="tab-pane fade show active" id="rules" role="tabpanel" aria-labelledby="rules-tab">
+                    <div class="card-body">
+                        <!-- Rule-Based Risk Score -->
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <div class="display-4 mb-2">
+                                        <span class="badge {{ badge_class }} fs-2">{{ analysis.email.score }}</span>
+                                    </div>
+                                    <h6>{{ analysis.email.label }}</h6>
+                                    <small class="text-muted">Confidence: {{ (analysis.email.confidence * 100) | round(1) }}%</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <div class="display-6 text-info">{{ analysis.email.rules_fired }}</div>
+                                    <small class="text-muted">Rules Triggered</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-center">
+                                    <div class="display-6 text-secondary">{{ analysis.email.processing_time_ms | round(1) }}ms</div>
+                                    <small class="text-muted">Processing Time</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rule Evidence -->
+                        {% if analysis.email.evidence %}
+                        <h6 class="mb-3">
+                            <i class="fas fa-list-ul me-2"></i>
+                            Detection Evidence ({{ analysis.email.evidence | length }} rules triggered)
+                        </h6>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Rule</th>
+                                        <th>Description</th>
+                                        <th>Weight</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for evidence in analysis.email.evidence %}
+                                    <tr>
+                                        <td>
+                                            <code class="text-primary">{{ evidence.rule_id }}</code>
+                                        </td>
+                                        <td>{{ evidence.description }}</td>
+                                        <td>
+                                            <span class="badge bg-secondary">+{{ evidence.weight }}</span>
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">{{ evidence.details }}</small>
+                                            {% if evidence.matched_content %}
+                                                <br><code class="text-dark">{{ evidence.matched_content | truncate(100) }}</code>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                        <div class="text-center text-muted py-4">
+                            <i class="fas fa-shield-alt fa-3x mb-3"></i>
+                            <h5>No Suspicious Indicators Found</h5>
+                            <p>All detection rules passed. This email appears to be legitimate.</p>
+                        </div>
+                        {% endif %}
                     </div>
-                {% else %}
-                    <div class="text-center text-muted">
-                        <i class="fas fa-shield-alt fa-3x mb-3"></i>
-                        <h5>No Suspicious Indicators Found</h5>
-                        <p>All detection rules passed. This email appears to be legitimate.</p>
+                </div>
+
+                <!-- AI Analysis Tab -->
+                {% if analysis.ai_analysis %}
+                <div class="tab-pane fade" id="ai" role="tabpanel" aria-labelledby="ai-tab">
+                    <div class="card-body">
+                        {% if analysis.ai_analysis.success %}
+                            <!-- AI Risk Score -->
+                            {% set ai_score = analysis.ai_analysis.score %}
+                            {% if ai_score >= 60 %}
+                                {% set ai_badge_class = "bg-danger" %}
+                                {% set ai_icon = "fas fa-exclamation-triangle" %}
+                            {% elif ai_score >= 30 %}
+                                {% set ai_badge_class = "bg-warning" %}
+                                {% set ai_icon = "fas fa-exclamation-circle" %}
+                            {% else %}
+                                {% set ai_badge_class = "bg-success" %}
+                                {% set ai_icon = "fas fa-shield-alt" %}
+                            {% endif %}
+
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <div class="display-4 mb-2">
+                                            <span class="badge {{ ai_badge_class }} fs-2">{{ ai_score }}</span>
+                                        </div>
+                                        <h6>
+                                            <i class="{{ ai_icon }} me-1"></i>{{ analysis.ai_analysis.label }}
+                                        </h6>
+                                        <small class="text-muted">AI Confidence</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <div class="display-6 text-info">{{ analysis.ai_analysis.tokens_used }}</div>
+                                        <small class="text-muted">Tokens Used</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <div class="display-6 text-success">${{ "%.4f"|format(analysis.ai_analysis.cost_estimate) }}</div>
+                                        <small class="text-muted">Cost Estimate</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <div class="display-6 text-secondary">{{ analysis.ai_analysis.processing_time_ms | round(1) }}ms</div>
+                                        <small class="text-muted">AI Processing Time</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- AI Evidence -->
+                            {% if analysis.ai_analysis.evidence %}
+                            <h6 class="mb-3">
+                                <i class="fas fa-brain me-2"></i>
+                                AI Analysis Evidence ({{ analysis.ai_analysis.evidence | length }} indicators)
+                            </h6>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Indicator</th>
+                                            <th>AI Description</th>
+                                            <th>Weight</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for evidence in analysis.ai_analysis.evidence %}
+                                        <tr>
+                                            <td>
+                                                <code class="text-info">{{ evidence.id }}</code>
+                                            </td>
+                                            <td>{{ evidence.description }}</td>
+                                            <td>
+                                                <span class="badge bg-info">+{{ evidence.weight }}</span>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-robot fa-3x mb-3"></i>
+                                <h5>AI Found No Threats</h5>
+                                <p>The AI analysis did not identify any phishing indicators.</p>
+                            </div>
+                            {% endif %}
+
+                            <!-- Model Info -->
+                            <div class="mt-4 p-3 bg-light rounded">
+                                <small class="text-muted">
+                                    <i class="fas fa-info-circle me-1"></i>
+                                    Analysis powered by GPT-4o-mini | 
+                                    Analyzed: {{ analysis.ai_analysis.created_at }} |
+                                    Model optimized for phishing detection and cybersecurity analysis
+                                </small>
+                            </div>
+
+                        {% else %}
+                            <!-- AI Analysis Failed -->
+                            <div class="alert alert-warning">
+                                <h6>
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    AI Analysis Unavailable
+                                </h6>
+                                <p class="mb-1">The AI analysis could not be completed.</p>
+                                {% if analysis.ai_analysis.error_message %}
+                                <small class="text-muted">Error: {{ analysis.ai_analysis.error_message }}</small>
+                                {% endif %}
+                                <hr>
+                                <small class="text-muted">
+                                    The rule-based analysis above is still valid and provides comprehensive threat detection.
+                                </small>
+                            </div>
+                        {% endif %}
                     </div>
+                </div>
                 {% endif %}
             </div>
         </div>
-        {% endif %}
 
         <!-- URLs Found -->
         {% if analysis.parsed and analysis.parsed.urls %}
@@ -137,40 +318,38 @@
                 </h5>
             </div>
             <div class="card-body">
-                {% if analysis.parsed.urls %}
-                    <div class="table-responsive">
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Domain</th>
-                                    <th>Path</th>
-                                    <th>Context</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for url in analysis.parsed.urls %}
-                                <tr>
-                                    <td>
-                                        <strong>{{ url.domain }}</strong>
-                                        {% if url.domain in ['bit.ly', 't.co', 'tinyurl.com', 'goo.gl'] %}
-                                            <span class="badge bg-warning ms-1">Shortener</span>
-                                        {% endif %}
-                                        {% if url.domain.endswith(('.top', '.xyz', '.click', '.cam')) %}
-                                            <span class="badge bg-danger ms-1">Suspicious TLD</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <code class="text-muted">{{ url.path | truncate(50) }}</code>
-                                    </td>
-                                    <td>
-                                        <small class="text-muted">{{ url.context | truncate(80) }}</small>
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                {% endif %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Domain</th>
+                                <th>Path</th>
+                                <th>Context</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for url in analysis.parsed.urls %}
+                            <tr>
+                                <td>
+                                    <strong>{{ url.domain }}</strong>
+                                    {% if url.domain in ['bit.ly', 't.co', 'tinyurl.com', 'goo.gl'] %}
+                                        <span class="badge bg-warning ms-1">Shortener</span>
+                                    {% endif %}
+                                    {% if url.domain.endswith(('.top', '.xyz', '.click', '.cam')) %}
+                                        <span class="badge bg-danger ms-1">Suspicious TLD</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <code class="text-muted">{{ url.path | truncate(50) }}</code>
+                                </td>
+                                <td>
+                                    <small class="text-muted">{{ url.context | truncate(80) }}</small>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         {% endif %}
@@ -299,55 +478,24 @@
         </div>
         {% endif %}
 
-        <!-- Technical Details -->
+        <!-- Security Warnings -->
+        {% if analysis.parsed and analysis.parsed.security_warnings %}
         <div class="card mb-4">
             <div class="card-header">
                 <h5 class="card-title mb-0">
-                    <i class="fas fa-cog me-2"></i>
-                    Processing Details
+                    <i class="fas fa-exclamation-triangle me-2 text-warning"></i>
+                    Security Warnings
                 </h5>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="display-6 text-primary">{{ analysis.email.processing_time_ms | round(1) }}ms</div>
-                            <small class="text-muted">Processing Time</small>
-                        </div>
+                {% for warning in analysis.parsed.security_warnings %}
+                    <div class="alert alert-warning alert-sm">
+                        <i class="fas fa-exclamation-triangle me-2"></i>{{ warning }}
                     </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="display-6 text-info">{{ analysis.email.rules_checked }}</div>
-                            <small class="text-muted">Rules Checked</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="display-6 text-warning">{{ analysis.parsed.urls | length if analysis.parsed else 0 }}</div>
-                            <small class="text-muted">URLs Found</small>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <div class="display-6 text-secondary">{{ analysis.parsed.security_warnings | length if analysis.parsed else 0 }}</div>
-                            <small class="text-muted">Warnings</small>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Security Warnings -->
-                {% if analysis.parsed and analysis.parsed.security_warnings %}
-                <div class="mt-3">
-                    <h6>Security Warnings</h6>
-                    {% for warning in analysis.parsed.security_warnings %}
-                        <div class="alert alert-warning alert-sm">
-                            <i class="fas fa-exclamation-triangle me-2"></i>{{ warning }}
-                        </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
+                {% endfor %}
             </div>
         </div>
+        {% endif %}
 
         <!-- Action Buttons -->
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
@@ -364,7 +512,7 @@
 
 {% block scripts %}
 <script>
-// Auto-expand sections based on content
+// Enhanced tab functionality and score comparison
 document.addEventListener('DOMContentLoaded', function() {
     // Auto-expand email content if it's short
     const textBody = '{{ analysis.parsed.text_body | length if analysis.parsed else 0 }}';
@@ -374,6 +522,26 @@ document.addEventListener('DOMContentLoaded', function() {
             contentCollapse.classList.add('show');
         }
     }
+
+    // Tab switch analytics
+    const tabButtons = document.querySelectorAll('#analysisTabs button[data-bs-toggle="tab"]');
+    tabButtons.forEach(button => {
+        button.addEventListener('shown.bs.tab', function (event) {
+            console.log('Analysis tab switched to:', event.target.id);
+        });
+    });
+
+    // Score comparison notification
+    const ruleScore = {{ analysis.email.score }};
+    {% if analysis.ai_analysis and analysis.ai_analysis.success %}
+    const aiScore = {{ analysis.ai_analysis.score }};
+    const scoreDiff = Math.abs(ruleScore - aiScore);
+    
+    if (scoreDiff > 20) {
+        console.log(`Significant score difference detected: Rules=${ruleScore}, AI=${aiScore}`);
+        // Could add UI notification here if desired
+    }
+    {% endif %}
 });
 </script>
 {% endblock %}
