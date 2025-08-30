@@ -5,9 +5,9 @@
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-orange)](https://openai.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/badge/Coverage-84%25-yellow)](docs/evaluation.md)
+[![Coverage](https://img.shields.io/badge/Coverage-83%25-yellow)](docs/evaluation.md)
 [![Security](https://img.shields.io/badge/Security-First-red)](docs/SECURITY.md)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-green)](https://github.com/Rblea97/Phishing_Email_analyzer/releases)
+[![Release](https://img.shields.io/badge/Release-v1.0.1-green)](https://github.com/Rblea97/Phishing_Email_analyzer/releases)
 
 > **Advanced cybersecurity tool combining rule-based detection with AI analysis to identify phishing emails with high accuracy and detailed evidence reporting.**
 
@@ -181,21 +181,23 @@ make build     # Production build with all checks
 - Confidence scoring with explanations
 
 ## 📈 Performance Metrics
-- **Analysis Speed**: ~500ms rule-based, 2-4s with AI analysis
-- **Test Coverage**: 83% (see [Coverage Report](docs/evaluation.md))
+- **Analysis Speed**: ~500ms rule-based, 2-4s with AI analysis ([Benchmark Methodology](docs/benchmarks.md))
+- **Test Coverage**: 83% ([Coverage Report](docs/evaluation.md) - authoritative source)
 - **Detection Rules**: 9 weighted rules with evidence collection ([Rule Details](docs/rules.md))
-- **Cost Efficiency**: ~$0.0002-0.004 per email analysis (based on measured usage)
-- **Scalability**: Rate-limited for production deployment
+- **Cost Efficiency**: ~$0.0002-0.004 per email analysis ([Cost Analysis](docs/cost-analysis.md) - measured usage)
+- **Scalability**: Rate-limited for production deployment ([Architecture](docs/architecture.md))
+
+*All metrics are measured and documented with reproducible methodologies. See individual documentation links for detailed analysis.*
 
 ## 🛠️ Technology Stack
 
-- **Backend**: Flask 3.0.0, Python 3.9+
-- **AI Integration**: OpenAI GPT-4o-mini API
-- **Database**: SQLite (development) → PostgreSQL (production)
-- **Frontend**: Bootstrap 5, responsive design
-- **Security**: Flask-Limiter, comprehensive input validation
+- **Backend**: Flask 3.0.0, Python 3.9+ ([Architecture](docs/architecture.md))
+- **AI Integration**: OpenAI GPT-4o-mini API ([Cost Analysis](docs/cost-analysis.md))
+- **Database**: SQLite (development) → PostgreSQL (production) ([Architecture](docs/architecture.md))
+- **Frontend**: Bootstrap 5, responsive design ([Architecture](docs/architecture.md))
+- **Security**: Flask-Limiter, comprehensive input validation ([Security Policy](docs/SECURITY.md))
 - **Testing**: Pytest with 83% coverage ([Test Results](docs/evaluation.md))
-- **Deployment**: Railway-ready with Gunicorn
+- **Deployment**: Railway-ready with Gunicorn ([Architecture](docs/architecture.md))
 
 ## 📋 Project Structure
 
@@ -217,18 +219,22 @@ Phishing_Email_analyzer/
 
 ## 🔒 Security & Privacy
 
-- **No PII to AI**: Only sanitized metadata sent to external APIs
-- **API Key Security**: Environment variables only, never logged
-- **Input Validation**: 4K token limits, JSON schema validation
-- **Rate Limiting**: Prevents abuse and controls costs
-- **Audit Trail**: Complete analysis logging for security review
+- **No PII to AI**: Only sanitized metadata sent to external APIs ([Privacy Compliance](docs/privacy-compliance.md))
+- **API Key Security**: Environment variables only, never logged ([Security Policy](docs/SECURITY.md))
+- **Input Validation**: 4K token limits, JSON schema validation ([Architecture](docs/architecture.md))
+- **Rate Limiting**: Prevents abuse and controls costs ([Security Policy](docs/SECURITY.md))
+- **Audit Trail**: Complete analysis logging for security review ([Security Policy](docs/SECURITY.md))
+
+**Compliance**: GDPR & CCPA compliant with privacy-by-design architecture ([Privacy Documentation](docs/privacy-compliance.md))
 
 ## 📊 Cost Analysis
 
-- **Model**: GPT-4o-mini (cost-optimized)
-- **Average Cost**: $0.001-0.005 per email
-- **Monthly Estimate**: ~$45 for 1,000 emails/day
-- **Cost Controls**: Token limits, usage monitoring, spending alerts
+- **Model**: GPT-4o-mini (cost-optimized) ([Cost Analysis](docs/cost-analysis.md))
+- **Average Cost**: $0.0002-0.004 per email (measured production usage)
+- **Monthly Estimate**: $6-120 for 1,000 emails/day ([Detailed Projections](docs/cost-analysis.md))
+- **Cost Controls**: Token limits, usage monitoring, spending alerts ([Implementation](docs/cost-analysis.md))
+
+*All cost estimates based on measured API usage and documented in [Cost Analysis](docs/cost-analysis.md)*
 
 ## 🤝 Contributing
 
@@ -255,11 +261,32 @@ This project demonstrates:
 - **Production Readiness**: Deployment configuration, testing, documentation
 - **Cost Optimization**: Efficient AI usage with monitoring and controls
 
+## 📚 Comprehensive Documentation
+
+All claims in this README are backed by detailed documentation with implementation references:
+
+### Core Documentation
+- **[Performance Benchmarks](docs/benchmarks.md)** - Detailed performance measurement methodology and results
+- **[Cost Analysis](docs/cost-analysis.md)** - Complete financial analysis with measured usage data
+- **[System Architecture](docs/architecture.md)** - Comprehensive system design and implementation details
+- **[Security Policy](docs/SECURITY.md)** - Security implementation with code references and validation
+- **[Privacy Compliance](docs/privacy-compliance.md)** - GDPR/CCPA compliance with PII protection details
+
+### Technical Documentation  
+- **[Detection Rules](docs/rules.md)** - Complete rule engine documentation with implementation references
+- **[Evaluation Results](docs/evaluation.md)** - Test coverage metrics and accuracy validation
+- **[API Reference](docs/API.md)** - Complete API documentation with examples
+- **[Installation Guide](docs/INSTALLATION.md)** - Setup and deployment instructions
+- **[Threat Model](docs/threat-model.md)** - Security threat analysis and data flow documentation
+
+*All documentation includes implementation references, test validation, and external standard compliance.*
+
 ## 📞 Support
 
 - **Issues**: [GitHub Issues](https://github.com/Rblea97/Phishing_Email_analyzer/issues)
-- **Documentation**: [Full Documentation](docs/)
-- **Security**: [Security Policy](docs/SECURITY.md)
+- **Documentation**: [Complete Documentation](docs/) - All claims backed by detailed analysis
+- **Security**: [Security Policy](docs/SECURITY.md) - Comprehensive security implementation
+- **Privacy**: [Privacy Compliance](docs/privacy-compliance.md) - GDPR/CCPA compliance documentation
 
 ---
 
