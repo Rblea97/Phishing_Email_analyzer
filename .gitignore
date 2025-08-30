@@ -74,6 +74,7 @@ pids
 # Coverage directory used by tools like istanbul
 coverage/
 *.lcov
+htmlcov/
 
 # Testing
 .coverage

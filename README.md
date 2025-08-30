@@ -5,7 +5,7 @@
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-orange)](https://openai.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/badge/Coverage-83%25-yellow)](docs/evaluation.md)
+[![Coverage](https://img.shields.io/badge/Coverage-84%25-yellow)](docs/evaluation.md)
 [![Security](https://img.shields.io/badge/Security-First-red)](docs/SECURITY.md)
 [![Release](https://img.shields.io/badge/Release-v1.0.0-green)](https://github.com/Rblea97/Phishing_Email_analyzer/releases)
 
