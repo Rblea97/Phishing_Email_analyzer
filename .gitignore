@@ -129,3 +129,7 @@ staticfiles/
 
 # Temporary test files
 test_api_key.py
+
+# AI Assistant Reference Files (Private)
+CLAUDE.md
+PHASE3_STATUS.md
