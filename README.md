@@ -19,12 +19,57 @@ This project demonstrates sophisticated phishing detection capabilities using a 
 - **Professional Interface**: Bootstrap-powered dashboard with tabbed results
 - **Production Ready**: Rate limiting, cost monitoring, and comprehensive security
 
+## 🎬 Live Demo
+
+### Animated Demo Preview
+![Phishing Detection Demo](demo.gif)
+
+*Live demonstration: Upload → Analysis → Results*
+
+**What you'll see in the demo:**
+- Upload a phishing email sample
+- Dual analysis (Rule-based + AI) processing 
+- Detailed threat scoring and evidence
+- Professional results dashboard
+- Analysis history tracking
+
+## 🧪 Try It Yourself
+
+### Sample Phishing Emails
+We've created 8 realistic phishing email samples for testing:
+
+📧 **[Download Sample Files](samples_for_users/)** - Ready-to-test phishing examples
+
+**Available Samples:**
+- Corporate HR benefits scam
+- PayPal security alert fraud  
+- Amazon delivery issue scam
+- Microsoft account warning
+- Cryptocurrency wallet breach
+- IRS tax refund fraud
+- Business invoice scam
+- Dating site romance scam
+
+### Automated Demo Generation
+Generate your own demo video using Playwright automation:
+
+```bash
+# Install demo dependencies
+python scripts/install_demo_deps.py
+
+# Test the setup
+python scripts/test_demo.py
+
+# Generate 60-second demo video
+python scripts/generate_demo.py
+```
+
 ## 📸 Screenshots
 
 ### Main Dashboard
 ![Dashboard](docs/screenshots/homepage.png)
 
-### File Upload Interface
+### File Upload Interface  
 ![Upload Interface](docs/screenshots/upload-interface.png)
 
 ### Analysis Results Overview
