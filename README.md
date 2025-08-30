@@ -4,7 +4,10 @@
 [![Flask](https://img.shields.io/badge/Flask-3.0.0-green)](https://flask.palletsprojects.com/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-orange)](https://openai.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Tests](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/Coverage-83%25-yellow)](docs/evaluation.md)
 [![Security](https://img.shields.io/badge/Security-First-red)](docs/SECURITY.md)
+[![Release](https://img.shields.io/badge/Release-v1.0.0-green)](https://github.com/Rblea97/Phishing_Email_analyzer/releases)
 
 > **Advanced cybersecurity tool combining rule-based detection with AI analysis to identify phishing emails with high accuracy and detailed evidence reporting.**
 
@@ -46,11 +49,39 @@ This project demonstrates sophisticated phishing detection capabilities using a 
 
 ## ⚡ Quick Start
 
-### Prerequisites
+### One-Click Development Setup
+
+```bash
+# Clone and set up everything
+git clone https://github.com/Rblea97/Phishing_Email_analyzer.git
+cd Phishing_Email_analyzer
+make dev
+# Add your OpenAI API key to .env, then:
+make run
+```
+
+### Docker Setup (Recommended)
+
+```bash
+# Build and run with Docker
+git clone https://github.com/Rblea97/Phishing_Email_analyzer.git
+cd Phishing_Email_analyzer
+cp .env.example .env
+# Add your OpenAI API key to .env
+make docker-build
+make docker-run
+```
+
+### Manual Installation
+
+<details>
+<summary>Click for manual setup instructions</summary>
+
+#### Prerequisites
 - Python 3.9+
 - OpenAI API key ([Get one here](https://platform.openai.com/api-keys))
 
-### Installation
+#### Installation Steps
 
 ```bash
 # Clone the repository
@@ -69,28 +100,32 @@ cp .env.example .env
 # Edit .env and add your OpenAI API key
 ```
 
-### Database Setup
+#### Database Setup
 
 ```bash
 # Initialize database
 python init_db.py
-
-# Run migrations for full feature set
 python migrate_to_phase2.py
 python migrate_to_phase3.py
 ```
 
-### Run the Application
+#### Run Application
 
 ```bash
 python app_phase2.py
 # Visit: http://localhost:5000
 ```
 
-### Run Tests
+</details>
+
+### Development Commands
 
 ```bash
-python run_tests.py
+make test      # Run test suite with coverage
+make lint      # Code quality and security checks  
+make format    # Format code with black/isort
+make clean     # Clean temporary files
+make build     # Production build with all checks
 ```
 
 ## 🚀 Features
@@ -132,9 +167,10 @@ python run_tests.py
 - Confidence scoring with explanations
 
 ## 📈 Performance Metrics
-- **Analysis Speed**: <500ms rule-based, <2s with AI
-- **Accuracy**: 90%+ on test fixtures with detailed evidence
-- **Cost Efficiency**: ~$0.001-0.005 per email analysis
+- **Analysis Speed**: ~500ms rule-based, 2-4s with AI analysis
+- **Test Coverage**: 83% (see [Coverage Report](docs/evaluation.md))
+- **Detection Rules**: 9 weighted rules with evidence collection ([Rule Details](docs/rules.md))
+- **Cost Efficiency**: ~$0.0002-0.004 per email analysis (based on measured usage)
 - **Scalability**: Rate-limited for production deployment
 
 ## 🛠️ Technology Stack
@@ -144,7 +180,7 @@ python run_tests.py
 - **Database**: SQLite (development) → PostgreSQL (production)
 - **Frontend**: Bootstrap 5, responsive design
 - **Security**: Flask-Limiter, comprehensive input validation
-- **Testing**: Pytest with 90%+ coverage
+- **Testing**: Pytest with 83% coverage ([Test Results](docs/evaluation.md))
 - **Deployment**: Railway-ready with Gunicorn
 
 ## 📋 Project Structure
