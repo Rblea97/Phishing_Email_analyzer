@@ -133,10 +133,11 @@ test_api_key.py
 
 # Internal Development Files (Private)
 CLAUDE.md
-PHASE3_STATUS.md
-PHASE4_PLANNING.md
+PHASE*_STATUS.md
+PHASE*_PLANNING.md
 IMPLEMENTATION_REFERENCE.md
 planning/
+*.db.phase*_backup_*
 
 # Development Scripts (Keep for functionality)
 # migrate_to_phase2.py
