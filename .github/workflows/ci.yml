@@ -39,7 +39,7 @@ jobs:
       run: |
         python init_db.py
         python migrate_to_phase2.py
-        python migrate_to_phase3.py
+        echo "y" | python migrate_to_phase3.py
     
     - name: Run tests with coverage
       run: |
