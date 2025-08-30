@@ -129,7 +129,7 @@ class TestIndividualRules:
         # Should detect mismatch between "Microsoft Office 365" and fake-service123.com
         assert evidence is not None
         assert evidence.rule_id == "HEADER_MISMATCH"
-        assert evidence.weight == 15
+        assert evidence.weight == 25
     
     def test_reply_to_mismatch_rule(self):
         """Test ReplyToMismatchRule"""
@@ -154,7 +154,7 @@ class TestIndividualRules:
         
         assert evidence is not None
         assert evidence.rule_id == "AUTH_FAIL_HINTS"
-        assert evidence.weight == 20
+        assert evidence.weight == 30
         assert 'fail' in evidence.details.lower()
     
     def test_urgent_language_rule(self):

@@ -28,9 +28,10 @@ MAX_PARSE_TIME = 30  # 30 seconds
 MAX_URLS_PER_EMAIL = 500
 MAX_HEADER_SIZE = 64 * 1024  # 64KB per header
 
-# URL extraction regex (comprehensive but safe)
+# URL extraction regex (comprehensive but safe, including Unicode)
 URL_REGEX = re.compile(
-    r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+    r"http[s]?://(?:[\w]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",
+    re.UNICODE
 )
 
 # Tracking parameter patterns to strip

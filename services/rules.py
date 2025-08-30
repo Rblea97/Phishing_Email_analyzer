@@ -157,12 +157,35 @@ class Rule:
         matches = re.findall(domain_pattern, display_name.lower())
         return matches[0] if matches else ""
 
+    def _detect_company_impersonation(self, display_name: str, from_domain: str) -> bool:
+        """Detect if display name impersonates well-known companies"""
+        display_lower = display_name.lower()
+        domain_lower = from_domain.lower()
+        
+        # List of well-known companies that are commonly impersonated
+        companies = [
+            "microsoft", "google", "apple", "amazon", "paypal", "ebay",
+            "facebook", "instagram", "twitter", "linkedin", "netflix",
+            "adobe", "salesforce", "dropbox", "office", "outlook",
+            "gmail", "yahoo", "banks", "bank", "visa", "mastercard"
+        ]
+        
+        # Check if display name contains company name but domain doesn't match
+        for company in companies:
+            if company in display_lower and company not in domain_lower:
+                # Additional check: avoid false positives for legitimate services
+                # mentioning these companies
+                if not any(legit in domain_lower for legit in [company + ".com", company + ".net", company + ".org"]):
+                    return True
+        
+        return False
+
 
 class HeaderMismatchRule(Rule):
     """Detect mismatch between display name and From domain"""
 
     def __init__(self):
-        super().__init__("HEADER_MISMATCH", "Display name domain differs from From domain", 15)
+        super().__init__("HEADER_MISMATCH", "Display name domain differs from From domain", 25)
 
     def check(self, parsed_email: ParsedEmail) -> Optional[RuleEvidence]:
         headers = parsed_email.headers
@@ -173,12 +196,23 @@ class HeaderMismatchRule(Rule):
         from_domain = self._extract_domain_from_email(headers.from_addr)
         display_domain = self._extract_domain_from_display_name(headers.from_display)
 
+        # Check for explicit domain mismatch
         if display_domain and from_domain and display_domain != from_domain:
             return RuleEvidence(
                 rule_id=self.rule_id,
                 description=self.description,
                 weight=self.weight,
                 details=f"Display name suggests '{display_domain}' but From address is '{from_domain}'",
+                matched_content=f"Display: '{headers.from_display}', From: '{headers.from_addr}'",
+            )
+
+        # Check for company impersonation
+        if self._detect_company_impersonation(headers.from_display, from_domain):
+            return RuleEvidence(
+                rule_id=self.rule_id,
+                description=self.description,
+                weight=self.weight,
+                details=f"Display name impersonates well-known company but From domain is '{from_domain}'",
                 matched_content=f"Display: '{headers.from_display}', From: '{headers.from_addr}'",
             )
 
@@ -219,7 +253,7 @@ class AuthFailureRule(Rule):
         super().__init__(
             "AUTH_FAIL_HINTS",
             "Authentication-Results indicates SPF/DKIM/DMARC failure",
-            20,
+            30,
         )
 
     def check(self, parsed_email: ParsedEmail) -> Optional[RuleEvidence]:
