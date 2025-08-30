@@ -10,7 +10,7 @@ import os
 
 def run_tests():
     """Run all tests with coverage reporting"""
-    print("🧪 Running AI-Powered Phishing Detection Test Suite...")
+    print("Running AI-Powered Phishing Detection Test Suite...")
     print("=" * 60)
     
     # Change to project directory
@@ -28,15 +28,15 @@ def run_tests():
             "--cov-report=html:htmlcov"
         ], check=True)
         
-        print("\n✅ All tests passed!")
-        print("📊 Coverage report generated in htmlcov/")
+        print("\n[SUCCESS] All tests passed!")
+        print("[INFO] Coverage report generated in htmlcov/")
         return True
         
     except subprocess.CalledProcessError as e:
-        print(f"\n❌ Tests failed with exit code {e.returncode}")
+        print(f"\n[ERROR] Tests failed with exit code {e.returncode}")
         return False
     except FileNotFoundError:
-        print("❌ pytest not found. Install with: pip install pytest pytest-cov")
+        print("[ERROR] pytest not found. Install with: pip install pytest pytest-cov")
         return False
 
 if __name__ == "__main__":

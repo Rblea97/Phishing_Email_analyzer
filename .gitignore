@@ -136,10 +136,16 @@ PHASE3_STATUS.md
 PHASE4_PLANNING.md
 IMPLEMENTATION_REFERENCE.md
 planning/
+
+# Development Scripts (Keep for functionality)
 migrate_to_phase2.py
 migrate_to_phase3.py
-
-# Old development files
-app.py
-test_setup.py
 verify_phase1.py
+test_setup.py
+
+# Screenshot generation scripts
+capture_screenshots.py
+capture_final_screenshots.py
+
+# Old app versions
+app.py

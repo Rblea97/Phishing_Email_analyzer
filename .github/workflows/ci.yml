@@ -1,0 +1,127 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: [3.9, '3.10', 3.11]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Initialize database
+      run: |
+        python init_db.py
+        python migrate_to_phase2.py
+        python migrate_to_phase3.py
+    
+    - name: Run tests with coverage
+      run: |
+        python -m pytest tests/ -v --cov=services --cov-report=xml --cov-report=term-missing
+      env:
+        # Mock OpenAI API key for testing (tests use mocked responses)
+        OPENAI_API_KEY: sk-test-mock-key-for-github-actions-testing
+        SECRET_KEY: test-secret-key-for-github-actions
+    
+    - name: Upload coverage reports
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+    
+    - name: Security scan with bandit
+      run: |
+        pip install bandit[toml]
+        bandit -r services/ -f json -o bandit-report.json || true
+        bandit -r services/ || true
+
+  lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    
+    - name: Install linting tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 black isort mypy
+    
+    - name: Lint with flake8
+      run: |
+        # Stop build if there are Python syntax errors or undefined names
+        flake8 services/ --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Check for complexity and style issues (warnings only)
+        flake8 services/ --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
+    
+    - name: Check code formatting with black
+      run: |
+        black --check --diff services/
+    
+    - name: Check import sorting with isort
+      run: |
+        isort --check-only --diff services/
+    
+    - name: Type checking with mypy
+      run: |
+        mypy services/ --ignore-missing-imports || true
+
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    
+    - name: Install security tools
+      run: |
+        python -m pip install --upgrade pip
+        pip install safety bandit[toml] semgrep
+        pip install -r requirements.txt
+    
+    - name: Check dependencies for vulnerabilities
+      run: |
+        safety check -r requirements.txt || true
+    
+    - name: Security linting with bandit
+      run: |
+        bandit -r services/ -f json -o bandit-report.json || true
+    
+    - name: Static analysis with semgrep
+      run: |
+        semgrep --config=auto services/ || true
