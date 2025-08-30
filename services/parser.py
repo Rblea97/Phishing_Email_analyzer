@@ -30,8 +30,7 @@ MAX_HEADER_SIZE = 64 * 1024  # 64KB per header
 
 # URL extraction regex (comprehensive but safe, including Unicode)
 URL_REGEX = re.compile(
-    r"http[s]?://(?:[\w]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",
-    re.UNICODE
+    r"http[s]?://(?:[\w]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", re.UNICODE
 )
 
 # Tracking parameter patterns to strip
