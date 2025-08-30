@@ -1,0 +1,121 @@
+Return-Path: <order-updates@amazon-customer-service.net>
+Delivered-To: shopper@email.com
+Received: from mail.amazon-customer-service.net (unknown [172.16.254.1])
+	by mx.email.com with ESMTP id jkl012
+	for <shopper@email.com>; Mon, 30 Aug 2025 12:18:45 +0000
+From: "Amazon Customer Service" <order-updates@amazon-customer-service.net>
+To: shopper@email.com
+Subject: Your order has been shipped - iPhone 15 Pro Max $1,299.99
+Date: Mon, 30 Aug 2025 12:18:40 +0000
+Message-ID: <20250830121840.jkl012@amazon-customer-service.net>
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Authentication-Results: email.com;
+	spf=fail (amazon-customer-service.net does not designate 172.16.254.1 as permitted);
+	dkim=fail reason="body hash mismatch";
+	dmarc=fail (p=quarantine dis=none)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Your Amazon.com order has shipped</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f7f7f7;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f7f7f7;">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: white; border: 1px solid #ddd;">
+                    
+                    <!-- Amazon Header -->
+                    <tr>
+                        <td style="background-color: #232f3e; padding: 20px;">
+                            <img src="https://m.media-amazon.com/images/G/01/gno/sprites/nav-sprite-global-1x_blueheaven._CB270698874_.png" 
+                                 alt="Amazon" style="height: 30px;" width="120">
+                        </td>
+                    </tr>
+                    
+                    <!-- Order Shipped -->
+                    <tr>
+                        <td style="padding: 30px;">
+                            <h2 style="color: #0066c0; margin: 0 0 20px 0;">Your order has shipped!</h2>
+                            
+                            <p>Hello,</p>
+                            <p>Good news! We've shipped your recent Amazon order. Here are the details:</p>
+                            
+                            <!-- Order Details -->
+                            <table width="100%" cellpadding="15" cellspacing="0" style="border: 1px solid #ddd; margin: 20px 0;">
+                                <tr style="background-color: #f3f3f3;">
+                                    <td colspan="2" style="font-weight: bold; border-bottom: 1px solid #ddd;">
+                                        Order #114-8542369-1234567
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="60%">
+                                        <strong>Apple iPhone 15 Pro Max (1TB, Natural Titanium)</strong><br>
+                                        <span style="color: #666;">Sold by: Apple Store Official</span><br>
+                                        <span style="color: #666;">Quantity: 1</span>
+                                    </td>
+                                    <td style="text-align: right; font-weight: bold;">
+                                        $1,299.99
+                                    </td>
+                                </tr>
+                                <tr style="background-color: #f9f9f9;">
+                                    <td>
+                                        <strong>Estimated delivery:</strong><br>
+                                        Tuesday, August 31, 2025
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <strong>Tracking #:</strong><br>
+                                        1Z999AA1234567890
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- Problem Notice -->
+                            <div style="background-color: #fff2cc; border: 1px solid #d6b656; padding: 20px; margin: 20px 0; border-radius: 4px;">
+                                <h3 style="color: #b45309; margin: 0 0 10px 0;">⚠️ Delivery Issue Detected</h3>
+                                <p style="margin: 0; color: #3c4043;">
+                                    Our delivery partner has flagged your address for verification. This high-value item requires additional security confirmation before delivery.
+                                </p>
+                            </div>
+                            
+                            <p><strong style="color: #d73027;">Action Required:</strong> To ensure successful delivery of your iPhone 15 Pro Max, please confirm your delivery address and payment method within 24 hours.</p>
+                            
+                            <div style="text-align: center; margin: 30px 0;">
+                                <a href="https://amzn.to/delivery-confirm" 
+                                   style="background-color: #ff9900; color: #0066c0; padding: 12px 30px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+                                    Confirm Delivery Details
+                                </a>
+                            </div>
+                            
+                            <div style="background-color: #f0f8ff; border-left: 4px solid #0066c0; padding: 15px; margin: 20px 0;">
+                                <p style="margin: 0; font-size: 14px;">
+                                    <strong>Important:</strong> Failure to confirm within 24 hours will result in your order being returned to the fulfillment center and a restocking fee of $129.99 being charged to your payment method.
+                                </p>
+                            </div>
+                            
+                            <p style="font-size: 14px; color: #666;">
+                                If the button above doesn't work, please copy and paste this link into your browser:<br>
+                                https://amazon-delivery-verification.secure-portal.net/confirm?order=114-8542369-1234567
+                            </p>
+                            
+                            <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+                            
+                            <p style="font-size: 12px; color: #666;">
+                                We hope you enjoy your new iPhone 15 Pro Max!<br><br>
+                                Amazon Customer Service<br>
+                                Order placed on August 28, 2025
+                            </p>
+                            
+                            <p style="font-size: 11px; color: #999; margin-top: 20px;">
+                                This message was sent from a notification-only address that cannot accept incoming email. Please do not reply to this message.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

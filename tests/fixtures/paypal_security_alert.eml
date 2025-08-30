@@ -1,0 +1,97 @@
+Return-Path: <security@paypal-support.com>
+Delivered-To: user@gmail.com
+Received: from mail.paypal-support.com (unknown [203.45.67.89])
+	by gmail-smtp-in.l.google.com with ESMTPS id xyz789
+	for <user@gmail.com>; Mon, 30 Aug 2025 14:22:15 +0000
+From: "PayPal Security Team" <security@paypal-support.com>
+To: user@gmail.com
+Subject: Security Alert: Suspicious Login Detected - Immediate Action Required
+Date: Mon, 30 Aug 2025 14:22:10 +0000
+Message-ID: <20250830142210.xyz789@paypal-support.com>
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Authentication-Results: gmail.com;
+	spf=fail (domain does not designate 203.45.67.89 as permitted sender);
+	dkim=none (no signature);
+	dmarc=fail (p=quarantine dis=none)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PayPal Security Alert</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f5f5f5;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5;">
+        <tr>
+            <td align="center" style="padding: 20px 0;">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: white; border-radius: 8px;">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td style="background-color: #003087; padding: 20px; text-align: center;">
+                            <img src="https://www.paypal.com/en_US/i/logo/paypal_logo.gif" alt="PayPal" style="height: 40px;">
+                        </td>
+                    </tr>
+                    
+                    <!-- Alert Banner -->
+                    <tr>
+                        <td style="background-color: #dc3545; color: white; padding: 15px; text-align: center;">
+                            <h2 style="margin: 0; font-size: 18px;">🔒 SECURITY ALERT 🔒</h2>
+                        </td>
+                    </tr>
+                    
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 30px;">
+                            <h3 style="color: #333; margin-top: 0;">Suspicious Login Activity Detected</h3>
+                            
+                            <p>Hello,</p>
+                            
+                            <p>We detected a suspicious login attempt to your PayPal account from an unrecognized device:</p>
+                            
+                            <div style="background-color: #f8f9fa; padding: 15px; margin: 20px 0; border-left: 4px solid #dc3545;">
+                                <strong>Login Details:</strong><br>
+                                📍 Location: Moscow, Russia<br>
+                                💻 Device: Unknown Windows PC<br>
+                                🕐 Time: Aug 30, 2025 2:15 PM EST<br>
+                                🌐 IP Address: 185.220.101.42
+                            </div>
+                            
+                            <p style="color: #dc3545; font-weight: bold;">If this wasn't you, your account may be compromised!</p>
+                            
+                            <p>To protect your account and funds, we've temporarily limited access. Please verify your identity immediately:</p>
+                            
+                            <div style="text-align: center; margin: 30px 0;">
+                                <a href="https://tinyurl.com/paypal-secure-verify" 
+                                   style="background-color: #ffc439; color: #003087; padding: 15px 30px; text-decoration: none; border-radius: 25px; font-weight: bold; display: inline-block;">
+                                    Secure My Account Now
+                                </a>
+                            </div>
+                            
+                            <div style="background-color: #fff3cd; padding: 15px; margin: 20px 0; border: 1px solid #ffeaa7;">
+                                <strong>⚠️ Time Sensitive:</strong> You have 24 hours to verify your identity before your account is permanently restricted.
+                            </div>
+                            
+                            <p><small>If you're unable to click the button above, copy and paste this link into your browser:<br>
+                            https://paypal-account-security.verification-center.net/secure-login?ref=suspicious-activity</small></p>
+                            
+                            <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+                            
+                            <p style="font-size: 12px; color: #666;">
+                                Thanks for helping us keep your account secure.<br>
+                                The PayPal Security Team<br><br>
+                                
+                                PayPal Holdings, Inc.<br>
+                                2211 North First Street<br>
+                                San Jose, CA 95131<br>
+                                United States
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

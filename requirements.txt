@@ -41,6 +41,10 @@ Flask-Limiter==3.5.0
 # SQLAlchemy==2.0.23
 # Flask-Migrate==4.0.5
 
+# Demo Generation Tools
+playwright==1.40.0
+pillow==10.1.0
+
 # Future Caching (Phase 6)
 # redis==5.0.1
 # Flask-Caching==2.1.0

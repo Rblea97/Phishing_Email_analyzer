@@ -1,0 +1,97 @@
+Return-Path: <alerts@coinbase-security.org>
+Delivered-To: crypto.trader@outlook.com
+Received: from smtp.coinbase-security.org (mail.crypto-alerts.org [45.123.67.210])
+	by outlook-smtp.live.com with ESMTP id def456
+	for <crypto.trader@outlook.com>; Mon, 30 Aug 2025 09:45:33 +0000
+From: "Coinbase Security" <alerts@coinbase-security.org>
+To: crypto.trader@outlook.com
+Subject: 🚨 WALLET BREACH DETECTED - Immediate Action Required to Secure $47,832.15
+Date: Mon, 30 Aug 2025 09:45:30 +0000
+Message-ID: <20250830094530.def456@coinbase-security.org>
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Authentication-Results: outlook.com;
+	spf=fail (coinbase-security.org does not designate 45.123.67.210 as permitted);
+	dkim=fail reason="no key for signature";
+	dmarc=fail (p=reject dis=none)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Coinbase Security Alert</title>
+</head>
+<body style="font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #0d1421;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: white;">
+        
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #1652f0 0%, #0d47a1 100%); padding: 20px; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 24px;">🛡️ Coinbase Security</h1>
+        </div>
+        
+        <!-- Critical Alert -->
+        <div style="background-color: #dc3545; color: white; padding: 15px; text-align: center; animation: blink 1s infinite;">
+            <h2 style="margin: 0; font-size: 20px;">🚨 CRITICAL SECURITY BREACH DETECTED 🚨</h2>
+        </div>
+        
+        <div style="padding: 30px;">
+            <h3 style="color: #dc3545; margin-top: 0;">Unauthorized Access to Your Wallet</h3>
+            
+            <p><strong>URGENT:</strong> Our advanced security systems detected multiple unauthorized login attempts to your Coinbase wallet containing <strong style="color: #28a745; font-size: 18px;">$47,832.15 USD</strong> in cryptocurrency.</p>
+            
+            <div style="background: #f8d7da; border: 2px solid #dc3545; padding: 20px; margin: 20px 0; border-radius: 8px;">
+                <h4 style="color: #721c24; margin: 0 0 10px 0;">⚠️ BREACH DETAILS:</h4>
+                <ul style="color: #721c24; margin: 0;">
+                    <li><strong>Location:</strong> Beijing, China (Unknown Device)</li>
+                    <li><strong>Time:</strong> Aug 30, 2025 - 09:42 AM UTC</li>
+                    <li><strong>Attempts:</strong> 47 failed login attempts in 3 minutes</li>
+                    <li><strong>Risk Level:</strong> <span style="color: #dc3545;">MAXIMUM THREAT</span></li>
+                </ul>
+            </div>
+            
+            <p><strong style="color: #dc3545;">Your crypto assets are at IMMEDIATE RISK!</strong></p>
+            
+            <p>To prevent theft of your cryptocurrency, you must verify your identity and enable additional security measures <strong>within the next 30 minutes</strong>.</p>
+            
+            <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0;">
+                <strong>Current Holdings at Risk:</strong><br>
+                • Bitcoin (BTC): 1.247 BTC ≈ $32,155.23<br>
+                • Ethereum (ETH): 8.95 ETH ≈ $14,677.92<br>
+                • USDC: $999.00<br>
+                <strong>Total Value: $47,832.15</strong>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://bit.ly/coinbase-emergency-verify" 
+                   style="background: linear-gradient(135deg, #1652f0 0%, #0d47a1 100%); color: white; padding: 18px 35px; text-decoration: none; border-radius: 30px; font-weight: bold; font-size: 16px; display: inline-block; box-shadow: 0 4px 15px rgba(22, 82, 240, 0.4);">
+                    🔒 SECURE MY WALLET NOW
+                </a>
+            </div>
+            
+            <div style="background: #ffebee; border: 2px solid #dc3545; padding: 15px; text-align: center; margin: 20px 0;">
+                <strong style="color: #dc3545;">⏰ TIME REMAINING: 29 minutes 47 seconds</strong><br>
+                <small>After this time, we cannot guarantee the safety of your funds</small>
+            </div>
+            
+            <p><small style="color: #666;">Alternative secure link (copy & paste if button doesn't work):<br>
+            https://coinbase-emergency-security.verification-portal.net/wallet-protection?user_id=crypto.trader&alert=breach_detected</small></p>
+            
+            <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+            
+            <div style="font-size: 12px; color: #888; text-align: center;">
+                <p>This is an automated security alert from Coinbase.<br>
+                Coinbase Global, Inc. | 100 Pine Street, Suite 1250, San Francisco, CA 94111</p>
+                
+                <p>For immediate assistance, contact our emergency security line: <strong>1-888-COINBASE</strong></p>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.7; }
+        }
+    </style>
+</body>
+</html>

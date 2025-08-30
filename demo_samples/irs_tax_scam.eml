@@ -1,0 +1,116 @@
+Return-Path: <refunds@irs-treasury.gov.net>
+Delivered-To: taxpayer@personal.com
+Received: from mail.irs-treasury.gov.net (tax-notifications.org [104.21.45.67])
+	by mx.personal.com with ESMTP id mno345
+	for <taxpayer@personal.com>; Mon, 30 Aug 2025 11:05:18 +0000
+From: "Internal Revenue Service" <refunds@irs-treasury.gov.net>
+To: taxpayer@personal.com
+Subject: TAX REFUND NOTIFICATION - $3,847.00 Pending - Claim Required by Sept 15
+Date: Mon, 30 Aug 2025 11:05:15 +0000
+Message-ID: <20250830110515.mno345@irs-treasury.gov.net>
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Authentication-Results: personal.com;
+	spf=fail (irs-treasury.gov.net does not designate 104.21.45.67 as permitted);
+	dkim=none (no signature found);
+	dmarc=fail (p=reject dis=none)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>IRS Tax Refund Notification</title>
+</head>
+<body style="font-family: 'Times New Roman', serif; margin: 0; padding: 0; background-color: #ffffff;">
+    <div style="max-width: 650px; margin: 0 auto; border: 2px solid #003d7a;">
+        
+        <!-- Official Header -->
+        <div style="background-color: #003d7a; color: white; padding: 20px; text-align: center;">
+            <h1 style="margin: 0; font-size: 24px; font-weight: normal;">DEPARTMENT OF THE TREASURY</h1>
+            <div style="font-size: 18px; margin: 5px 0;">Internal Revenue Service</div>
+            <div style="font-size: 14px;">United States of America</div>
+        </div>
+        
+        <!-- Notice Header -->
+        <div style="background-color: #ffd700; color: #003d7a; padding: 15px; text-align: center; border-bottom: 2px solid #003d7a;">
+            <h2 style="margin: 0; font-size: 20px;">OFFICIAL TAX REFUND NOTIFICATION</h2>
+        </div>
+        
+        <div style="padding: 30px; line-height: 1.6;">
+            <div style="text-align: right; margin-bottom: 20px; font-size: 12px;">
+                Notice Date: August 30, 2025<br>
+                Notice Number: CP2000-2025-089432<br>
+                Taxpayer ID: **-**-####
+            </div>
+            
+            <p><strong>Dear Taxpayer,</strong></p>
+            
+            <p>This is an <strong>OFFICIAL NOTIFICATION</strong> from the Internal Revenue Service regarding an unclaimed tax refund in your name.</p>
+            
+            <!-- Refund Details Box -->
+            <div style="border: 3px solid #003d7a; padding: 20px; margin: 25px 0; background-color: #f0f8ff;">
+                <h3 style="color: #003d7a; margin: 0 0 15px 0; text-align: center;">💰 REFUND AMOUNT DUE</h3>
+                <div style="font-size: 32px; font-weight: bold; color: #228b22; text-align: center; margin: 15px 0;">
+                    $3,847.00
+                </div>
+                <div style="text-align: center; color: #003d7a;">
+                    <strong>Tax Year 2024 - Additional Credits Applied</strong>
+                </div>
+            </div>
+            
+            <p>Our records indicate that you are entitled to receive this refund due to:</p>
+            <ul style="color: #003d7a;">
+                <li>Earned Income Tax Credit adjustment: $1,247.00</li>
+                <li>Additional Child Tax Credit: $1,600.00</li>
+                <li>Recovery Rebate Credit correction: $1,000.00</li>
+            </ul>
+            
+            <div style="background-color: #ffe4e1; border: 2px solid #dc143c; padding: 20px; margin: 25px 0;">
+                <h4 style="color: #dc143c; margin: 0 0 10px 0;">⚠️ IMPORTANT DEADLINE</h4>
+                <p style="margin: 0; color: #8b0000;">
+                    <strong>You must claim this refund by September 15, 2025.</strong> Failure to respond will result in the refund being transferred to the U.S. Treasury General Fund and will no longer be available to you.
+                </p>
+            </div>
+            
+            <p><strong>TO CLAIM YOUR REFUND:</strong> Complete the verification process using our secure online system. This ensures your identity and prevents fraudulent claims.</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://bit.ly/IRS-refund-claim-2025" 
+                   style="background-color: #dc143c; color: white; padding: 15px 40px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-block;">
+                    CLAIM REFUND NOW →
+                </a>
+            </div>
+            
+            <div style="background-color: #f5f5dc; border: 1px solid #daa520; padding: 15px; margin: 20px 0; font-size: 14px;">
+                <strong>Verification Required:</strong> Due to increased tax fraud, the IRS requires additional identity verification for refunds over $3,000. You will need:
+                <ul style="margin: 10px 0;">
+                    <li>Social Security Number</li>
+                    <li>Date of Birth</li>
+                    <li>Filing Status from 2024 return</li>
+                    <li>Bank account information for direct deposit</li>
+                </ul>
+            </div>
+            
+            <p style="font-size: 14px; color: #666;">
+                Alternative access (if button above doesn't work): <br>
+                https://irs-refund-processing.treasury-services.net/verify-taxpayer-id?notice=CP2000-2025-089432
+            </p>
+            
+            <hr style="margin: 30px 0; border: none; border-top: 2px solid #003d7a;">
+            
+            <div style="font-size: 12px; color: #666;">
+                <p><strong>Important Notice:</strong> This is an official communication from the IRS. Do not ignore this notice as it may affect your future tax obligations.</p>
+                
+                <p>
+                    Internal Revenue Service<br>
+                    Department of the Treasury<br>
+                    1111 Constitution Ave NW<br>
+                    Washington, DC 20224
+                </p>
+                
+                <p>For questions, call our automated refund hotline: <strong>1-800-829-1954</strong></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

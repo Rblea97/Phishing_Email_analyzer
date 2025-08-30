@@ -1,0 +1,70 @@
+Return-Path: <hr-notifications@corptech-solutions.net>
+Delivered-To: employee@company.com
+Received: from mail.corptech-solutions.net (mail.corptech-solutions.net [192.168.1.100])
+	by mx.company.com with ESMTP id abc123
+	for <employee@company.com>; Mon, 30 Aug 2025 10:15:32 +0000
+From: "HR Department" <hr-notifications@corptech-solutions.net>
+To: employee@company.com
+Subject: URGENT: Employee Benefits Update Required - Action Needed by EOD
+Date: Mon, 30 Aug 2025 10:15:30 +0000
+Message-ID: <20250830101530.abc123@corptech-solutions.net>
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Authentication-Results: mx.company.com;
+	spf=fail (sender IP is not authorized) smtp.helo=corptech-solutions.net;
+	dkim=fail reason="signature verification failed";
+	dmarc=fail (p=reject dis=none)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Benefits Update Required</title>
+</head>
+<body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: #ff4444; color: white; padding: 10px; text-align: center;">
+            <h2>🚨 URGENT ACTION REQUIRED 🚨</h2>
+        </div>
+        
+        <div style="padding: 20px; border: 1px solid #ddd;">
+            <p>Dear Employee,</p>
+            
+            <p><strong style="color: red;">Your employee benefits will be SUSPENDED tonight at 11:59 PM</strong> 
+            if you do not complete the mandatory benefits verification process.</p>
+            
+            <p>Due to new federal compliance requirements, all employees must verify their 
+            identity and benefits information through our secure portal.</p>
+            
+            <div style="background: #fff3cd; padding: 15px; margin: 20px 0; border-left: 4px solid #ffc107;">
+                <strong>⚠️ DEADLINE: Today 11:59 PM EST</strong><br>
+                Failure to complete this process will result in:
+                <ul>
+                    <li>Loss of health insurance coverage</li>
+                    <li>Suspension of 401k contributions</li>
+                    <li>Termination of dental and vision benefits</li>
+                </ul>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://bit.ly/emp-verify-2025" style="background: #28a745; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                    VERIFY BENEFITS NOW →
+                </a>
+            </div>
+            
+            <p><small>If you have trouble with the link above, copy and paste this URL into your browser:<br>
+            https://employee-benefits-verification.secure-portal.net/verify?token=abc123xyz789</small></p>
+            
+            <p>This process takes only 2-3 minutes but is MANDATORY for all employees.</p>
+            
+            <hr style="margin: 30px 0;">
+            
+            <p><small>
+                This message was sent by the HR Benefits Team<br>
+                CorpTech Solutions - Human Resources Division<br>
+                If you have questions, contact: hr@corptech-solutions.net
+            </small></p>
+        </div>
+    </div>
+</body>
+</html>

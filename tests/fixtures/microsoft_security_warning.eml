@@ -1,0 +1,100 @@
+Return-Path: <account-security@microsoft-online.net>
+Delivered-To: user@company.com
+Received: from mail.microsoft-online.net (mx.ms-security-alerts.org [198.51.100.15])
+	by mx.company.com with ESMTP id ghi789
+	for <user@company.com>; Mon, 30 Aug 2025 16:30:22 +0000
+From: "Microsoft Account Security" <account-security@microsoft-online.net>
+To: user@company.com
+Subject: Your Microsoft account will be closed
+Date: Mon, 30 Aug 2025 16:30:20 +0000
+Message-ID: <20250830163020.ghi789@microsoft-online.net>
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Authentication-Results: company.com;
+	spf=neutral (198.51.100.15 is neither permitted nor denied);
+	dkim=none (no signature found);
+	dmarc=none (no DMARC policy)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Microsoft Account Security</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f3f2f1;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        
+        <!-- Microsoft Header -->
+        <div style="background-color: #0078d4; padding: 20px; text-align: center;">
+            <div style="color: white; font-size: 20px; font-weight: 600;">Microsoft</div>
+        </div>
+        
+        <div style="padding: 40px 30px;">
+            <h2 style="color: #323130; margin: 0 0 20px 0; font-size: 24px;">We've detected unusual activity</h2>
+            
+            <p style="color: #323130; font-size: 16px; line-height: 1.5;">Hello,</p>
+            
+            <p style="color: #323130; font-size: 16px; line-height: 1.5;">
+                Someone tried to sign in to your Microsoft account <strong>user@company.com</strong> from a device we don't recognize.
+            </p>
+            
+            <div style="background-color: #fef9e7; border-left: 4px solid #ffb900; padding: 16px; margin: 24px 0;">
+                <div style="font-weight: 600; color: #323130; margin-bottom: 8px;">Sign-in attempt details:</div>
+                <div style="color: #605e5c; font-size: 14px;">
+                    <strong>Date:</strong> Monday, August 30, 2025, 4:28:15 PM UTC<br>
+                    <strong>Country/Region:</strong> Russia<br>
+                    <strong>IP address:</strong> 185.220.102.8<br>
+                    <strong>Device:</strong> Unknown Linux device
+                </div>
+            </div>
+            
+            <p style="color: #323130; font-size: 16px; line-height: 1.5;">
+                <strong>If this was you</strong>, you can safely ignore this email.
+            </p>
+            
+            <p style="color: #323130; font-size: 16px; line-height: 1.5;">
+                <strong>If this wasn't you</strong>, someone else might have your password. Please secure your account right away.
+            </p>
+            
+            <div style="margin: 32px 0; text-align: center;">
+                <a href="https://account.microsoft.com/security" 
+                   style="background-color: #0078d4; color: white; padding: 12px 24px; text-decoration: none; border-radius: 2px; font-weight: 600; display: inline-block;">
+                    Review recent activity
+                </a>
+            </div>
+            
+            <div style="background-color: #f3f2f1; padding: 16px; margin: 24px 0; border-radius: 2px;">
+                <p style="margin: 0; font-size: 14px; color: #605e5c;">
+                    <strong>Why are we sending this?</strong><br>
+                    We take the security of your Microsoft account seriously, and we want to keep you informed of important account activity.
+                </p>
+            </div>
+            
+            <div style="margin: 32px 0;">
+                <p style="color: #323130; font-size: 14px; margin: 0;">
+                    If you don't recognize this activity, someone else might have your password.
+                </p>
+                <a href="https://tinyurl.com/ms-secure-account-2025" style="color: #0078d4; text-decoration: none; font-size: 14px; font-weight: 600;">
+                    Secure your account →
+                </a>
+            </div>
+            
+            <hr style="border: none; border-top: 1px solid #edebe9; margin: 32px 0;">
+            
+            <div style="font-size: 12px; color: #605e5c;">
+                <p>Thanks,<br>The Microsoft account team</p>
+                
+                <p style="margin-top: 24px;">
+                    Microsoft Corporation<br>
+                    One Microsoft Way<br>
+                    Redmond, WA 98052, USA
+                </p>
+                
+                <p style="margin-top: 16px;">
+                    This is an automated message. Please do not reply to this email.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
