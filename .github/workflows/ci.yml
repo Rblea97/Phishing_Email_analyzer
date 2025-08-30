@@ -87,7 +87,7 @@ jobs:
     
     - name: Check code formatting with black
       run: |
-        black --check --diff services/
+        black --check --diff services/ --line-length=100 --target-version py39
     
     - name: Check import sorting with isort
       run: |
