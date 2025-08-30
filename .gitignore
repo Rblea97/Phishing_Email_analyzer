@@ -138,8 +138,8 @@ IMPLEMENTATION_REFERENCE.md
 planning/
 
 # Development Scripts (Keep for functionality)
-migrate_to_phase2.py
-migrate_to_phase3.py
+# migrate_to_phase2.py
+# migrate_to_phase3.py
 verify_phase1.py
 test_setup.py
 
