@@ -24,6 +24,13 @@ pytest==7.4.3
 pytest-flask==1.3.0
 pytest-cov==6.2.1
 
+# Code Quality & Security
+flake8==6.1.0
+black==23.11.0
+isort==5.12.0
+bandit==1.7.5
+safety==2.3.4
+
 # Production Server
 gunicorn==21.2.0
 

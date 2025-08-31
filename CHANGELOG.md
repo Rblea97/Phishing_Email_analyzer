@@ -133,7 +133,7 @@ This is the first stable release of the AI-Powered Phishing Detection System, fe
 
 ```
 Phishing_Email_analyzer/
-├── app_phase2.py          # Main Flask application
+├── app.py          # Main Flask application
 ├── requirements.txt       # Dependencies
 ├── Dockerfile            # Container configuration
 ├── Makefile             # Development commands

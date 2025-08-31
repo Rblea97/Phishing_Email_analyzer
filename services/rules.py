@@ -161,23 +161,44 @@ class Rule:
         """Detect if display name impersonates well-known companies"""
         display_lower = display_name.lower()
         domain_lower = from_domain.lower()
-        
+
         # List of well-known companies that are commonly impersonated
         companies = [
-            "microsoft", "google", "apple", "amazon", "paypal", "ebay",
-            "facebook", "instagram", "twitter", "linkedin", "netflix",
-            "adobe", "salesforce", "dropbox", "office", "outlook",
-            "gmail", "yahoo", "banks", "bank", "visa", "mastercard"
+            "microsoft",
+            "google",
+            "apple",
+            "amazon",
+            "paypal",
+            "ebay",
+            "facebook",
+            "instagram",
+            "twitter",
+            "linkedin",
+            "netflix",
+            "adobe",
+            "salesforce",
+            "dropbox",
+            "office",
+            "outlook",
+            "gmail",
+            "yahoo",
+            "banks",
+            "bank",
+            "visa",
+            "mastercard",
         ]
-        
+
         # Check if display name contains company name but domain doesn't match
         for company in companies:
             if company in display_lower and company not in domain_lower:
                 # Additional check: avoid false positives for legitimate services
                 # mentioning these companies
-                if not any(legit in domain_lower for legit in [company + ".com", company + ".net", company + ".org"]):
+                if not any(
+                    legit in domain_lower
+                    for legit in [company + ".com", company + ".net", company + ".org"]
+                ):
                     return True
-        
+
         return False
 
 

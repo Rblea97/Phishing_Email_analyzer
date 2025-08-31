@@ -406,7 +406,7 @@ def audit_pii_removal(original_data: dict, sanitized_data: dict) -> dict:
 
 ### Data Storage & Retention Policy
 
-**Local Database Storage**: [`app_phase2.py:73-77`](../app_phase2.py#L73-L77)
+**Local Database Storage**: [`app.py:73-77`](../app.py#L73-L77)
 
 | Data Type | Retention Period | Storage Location | PII Level | Justification |
 |-----------|-----------------|------------------|-----------|---------------|

@@ -19,7 +19,7 @@
 
 ## 🎯 Project Overview
 
-This personal cybersecurity project showcases advanced computer science skills through a sophisticated phishing detection system. Developed during Fall 2025 semester and inspired by coursework in mobile security at CU Denver, it demonstrates my ability to integrate modern AI technologies with traditional cybersecurity approaches.
+This personal cybersecurity project showcases advanced computer science skills through a sophisticated phishing detection system. Developed during Fall 2024 semester and inspired by coursework in mobile security at CU Denver, it demonstrates my ability to integrate modern AI technologies with traditional cybersecurity approaches.
 
 ### 🎓 Skills Development Focus
 - **Threat Detection & Analysis**: Email security protocols, phishing pattern recognition, incident response
@@ -141,7 +141,7 @@ python migrate_to_phase3.py
 #### Run Application
 
 ```bash
-python app_phase2.py
+python app.py
 # Visit: http://localhost:5000
 ```
 
@@ -234,7 +234,7 @@ make build     # Production build with all checks
 
 ```
 Phishing_Email_analyzer/
-├── app_phase2.py          # Main Flask application
+├── app.py                 # Main Flask application
 ├── requirements.txt       # Dependencies
 ├── services/             # Core detection modules
 │   ├── parser.py         # Email parsing with security

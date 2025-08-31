@@ -74,10 +74,10 @@ This document provides comprehensive external references, standards, and resourc
 
 | Resource | Description | Usage | Implementation |
 |----------|-------------|-------|----------------|
-| **[Flask Documentation](https://flask.palletsprojects.com/)** | Official Flask documentation | Web framework implementation | [`app_phase2.py`](../app_phase2.py) |
+| **[Flask Documentation](https://flask.palletsprojects.com/)** | Official Flask documentation | Web framework implementation | [`app.py`](../app.py) |
 | **[Flask Security Guide](https://flask.palletsprojects.com/en/2.3.x/security/)** | Flask security best practices | Security implementation | [`docs/SECURITY.md`](SECURITY.md) |
-| **[Flask-Limiter](https://flask-limiter.readthedocs.io/)** | Rate limiting for Flask | Rate limiting implementation | [`app_phase2.py:49-56`](../app_phase2.py#L49-L56) |
-| **[Werkzeug Documentation](https://werkzeug.palletsprojects.com/)** | WSGI utilities for Flask | HTTP utilities and security | [`app_phase2.py`](../app_phase2.py) |
+| **[Flask-Limiter](https://flask-limiter.readthedocs.io/)** | Rate limiting for Flask | Rate limiting implementation | [`app.py:49-56`](../app.py#L49-L56) |
+| **[Werkzeug Documentation](https://werkzeug.palletsprojects.com/)** | WSGI utilities for Flask | HTTP utilities and security | [`app.py`](../app.py) |
 
 ### Frontend Frameworks
 

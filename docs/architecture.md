@@ -44,7 +44,7 @@ graph TB
 ```
 
 **Key Components**:
-- **Flask Application**: [`app_phase2.py`](../app_phase2.py) - Main web server
+- **Flask Application**: [`app.py`](../app.py) - Main web server
 - **Rule Engine**: [`services/rules.py`](../services/rules.py) - Local detection system
 - **AI Analyzer**: [`services/ai.py`](../services/ai.py) - OpenAI integration
 - **Email Parser**: [`services/parser.py`](../services/parser.py) - Email processing
@@ -130,7 +130,7 @@ CREATE TABLE parsed_content (
 - [`migrate_to_phase3.py`](../migrate_to_phase3.py) - AI analysis tables
 - Future: `migrate_to_postgresql.py` - Production database migration
 
-**Database Connection**: [`app_phase2.py:73-77`](../app_phase2.py#L73-L77)
+**Database Connection**: [`app.py:73-77`](../app.py#L73-L77)
 ```python
 def get_db_connection():
     """Get database connection with row factory"""
@@ -143,20 +143,20 @@ def get_db_connection():
 
 ### Endpoint Overview
 
-**Route Definitions**: [`app_phase2.py:140-350`](../app_phase2.py#L140-L350)
+**Route Definitions**: [`app.py:140-350`](../app.py#L140-L350)
 
 | Endpoint | Method | Rate Limit | Purpose | Implementation |
 |----------|--------|------------|---------|----------------|
-| `/` | GET | None | Main upload interface | [`app_phase2.py:140-150`](../app_phase2.py#L140-L150) |
-| `/upload` | POST | 10/min per IP | Email analysis | [`app_phase2.py:155-280`](../app_phase2.py#L155-L280) |
-| `/analysis/<id>` | GET | None | Results display | [`app_phase2.py:285-320`](../app_phase2.py#L285-L320) |
-| `/analyses` | GET | None | History listing | [`app_phase2.py:325-350`](../app_phase2.py#L325-L350) |
-| `/stats` | GET | None | System metrics | [`app_phase2.py:355-380`](../app_phase2.py#L355-L380) |
-| `/health` | GET | None | Health monitoring | [`app_phase2.py:385-420`](../app_phase2.py#L385-L420) |
+| `/` | GET | None | Main upload interface | [`app.py:140-150`](../app.py#L140-L150) |
+| `/upload` | POST | 10/min per IP | Email analysis | [`app.py:155-280`](../app.py#L155-L280) |
+| `/analysis/<id>` | GET | None | Results display | [`app.py:285-320`](../app.py#L285-L320) |
+| `/analyses` | GET | None | History listing | [`app.py:325-350`](../app.py#L325-L350) |
+| `/stats` | GET | None | System metrics | [`app.py:355-380`](../app.py#L355-L380) |
+| `/health` | GET | None | Health monitoring | [`app.py:385-420`](../app.py#L385-L420) |
 
 ### Rate Limiting Architecture
 
-**Implementation**: [`app_phase2.py:49-56`](../app_phase2.py#L49-L56)
+**Implementation**: [`app.py:49-56`](../app.py#L49-L56)
 ```python
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -201,7 +201,7 @@ def upload_file():
 
 ### Security Boundaries
 
-**Security Implementation**: [`app_phase2.py:80-120`](../app_phase2.py#L80-L120)
+**Security Implementation**: [`app.py:80-120`](../app.py#L80-L120)
 
 #### 1. Input Validation Boundary
 ```python  
@@ -264,8 +264,8 @@ def prepare_ai_input(email_data: dict) -> str:
 
 | Control Type | Implementation | Location | Purpose |
 |--------------|----------------|----------|---------|
-| **Input Validation** | File type, size, content checks | [`app_phase2.py:88-120`](../app_phase2.py#L88-L120) | Malicious file prevention |
-| **Rate Limiting** | IP-based request limiting | [`app_phase2.py:49-56`](../app_phase2.py#L49-L56) | DoS protection |
+| **Input Validation** | File type, size, content checks | [`app.py:88-120`](../app.py#L88-L120) | Malicious file prevention |
+| **Rate Limiting** | IP-based request limiting | [`app.py:49-56`](../app.py#L49-L56) | DoS protection |
 | **PII Protection** | Content sanitization | [`services/ai.py:100-130`](../services/ai.py#L100-L130) | Privacy protection |
 | **Cost Controls** | Daily spending limits | [`services/ai.py:60-85`](../services/ai.py#L60-L85) | Financial protection |
 | **Timeout Protection** | Processing time limits | [`services/parser.py:25-35`](../services/parser.py#L25-L35) | Resource protection |
@@ -275,7 +275,7 @@ def prepare_ai_input(email_data: dict) -> str:
 
 ### Upload Processing Flow
 
-**Main Upload Handler**: [`app_phase2.py:155-280`](../app_phase2.py#L155-L280)
+**Main Upload Handler**: [`app.py:155-280`](../app.py#L155-L280)
 
 ```mermaid
 graph TD
@@ -302,7 +302,7 @@ graph TD
 
 ### File Validation Pipeline
 
-**Validation Implementation**: [`app_phase2.py:80-120`](../app_phase2.py#L80-L120)
+**Validation Implementation**: [`app.py:80-120`](../app.py#L80-L120)
 
 **1. Extension Validation**
 ```python
@@ -347,7 +347,7 @@ def validate_file_content(file):
 
 ### Dual Analysis System
 
-**Orchestration Logic**: [`app_phase2.py:200-250`](../app_phase2.py#L200-L250)
+**Orchestration Logic**: [`app.py:200-250`](../app.py#L200-L250)
 
 ```python
 def process_email_analysis(parsed_email):
@@ -548,7 +548,7 @@ make docker-run     # Run with environment file
 
 ### Health Monitoring
 
-**Health Check Endpoint**: [`app_phase2.py:385-420`](../app_phase2.py#L385-L420)
+**Health Check Endpoint**: [`app.py:385-420`](../app.py#L385-L420)
 ```python
 @app.route('/health')
 def health_check():
@@ -606,7 +606,7 @@ class MetricsCollector:
 
 ### Logging Architecture
 
-**Log Configuration**: [`app_phase2.py:33-36`](../app_phase2.py#L33-L36)
+**Log Configuration**: [`app.py:33-36`](../app.py#L33-L36)
 ```python
 import logging
 
@@ -648,7 +648,7 @@ RATE_LIMIT_PER_MINUTE=10                 # Upload rate limit
 DAILY_ANALYSIS_LIMIT=100                 # Daily analysis limit
 ```
 
-**Configuration Loading**: [`app_phase2.py:30-32`](../app_phase2.py#L30-L32)
+**Configuration Loading**: [`app.py:30-32`](../app.py#L30-L32)
 ```python
 from dotenv import load_dotenv
 load_dotenv(override=True)  # Reload environment on restart
@@ -656,7 +656,7 @@ load_dotenv(override=True)  # Reload environment on restart
 
 ### Feature Flags
 
-**AI Feature Toggle**: [`app_phase2.py:57-63`](../app_phase2.py#L57-L63)
+**AI Feature Toggle**: [`app.py:57-63`](../app.py#L57-L63)
 ```python
 AI_ENABLED = bool(os.getenv('OPENAI_API_KEY'))
 

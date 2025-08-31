@@ -356,7 +356,7 @@ class TestEndToEndIntegration:
         except (TypeError, json.JSONDecodeError) as e:
             pytest.fail(f"JSON serialization failed: {e}")
     
-    @pytest.mark.skip("Flask app tests require app_phase2.py integration")
+    @pytest.mark.skip("Flask app tests require app.py integration")
     def test_flask_integration(self):
         """Test integration with Flask application"""
         # This would test the actual Flask endpoints

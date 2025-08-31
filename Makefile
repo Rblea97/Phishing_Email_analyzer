@@ -43,21 +43,21 @@ test:
 lint:
 	@echo "Running code quality checks..."
 	@echo "🔍 Flake8 linting..."
-	@flake8 services/ --count --select=E9,F63,F7,F82 --show-source --statistics || true
-	@flake8 services/ --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
+	@python -m flake8 services/ --count --select=E9,F63,F7,F82 --show-source --statistics || true
+	@python -m flake8 services/ --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
 	@echo "🔒 Security scanning with bandit..."
-	@bandit -r services/ -f json -o bandit-report.json || true
-	@bandit -r services/ || true
+	@python -m bandit -r services/ -f json -o bandit-report.json || true
+	@python -m bandit -r services/ || true
 	@echo "📦 Dependency security check..."
-	@safety check -r requirements.txt || true
+	@python -m safety check -r requirements.txt || true
 
 # Format code
 format:
 	@echo "Formatting code..."
 	@echo "🎨 Running black..."
-	@black services/ --line-length 100 || true
+	@python -m black services/ --line-length 100 || true
 	@echo "📚 Running isort..."
-	@isort services/ || true
+	@python -m isort services/ || true
 	@echo "✅ Code formatted"
 
 # Run development server
@@ -65,7 +65,7 @@ run:
 	@echo "Starting development server..."
 	@echo "🚀 Server will be available at http://localhost:5000"
 	@echo "⚠️  Make sure OPENAI_API_KEY is set in .env"
-	python app_phase2.py
+	python app.py
 
 # Production build
 build: clean test lint
@@ -101,8 +101,8 @@ quick-test:
 
 security:
 	@echo "Security-focused checks..."
-	bandit -r services/
-	safety check -r requirements.txt
+	python -m bandit -r services/
+	python -m safety check -r requirements.txt
 
 # Database commands
 db-init:

@@ -69,7 +69,7 @@ python migrate_to_phase3.py
 python run_tests.py
 
 # Start application
-python app_phase2.py
+python app.py
 ```
 
 Visit `http://localhost:5000` to access the application.
@@ -177,7 +177,7 @@ python -m pytest tests/test_ai.py -v
 ### Manual Testing
 ```bash
 # Start the application
-python app_phase2.py
+python app.py
 
 # In another terminal, test endpoints
 curl http://localhost:5000/health
@@ -185,7 +185,7 @@ curl http://localhost:5000/stats
 ```
 
 ### Upload Test Email
-1. Start the application: `python app_phase2.py`
+1. Start the application: `python app.py`
 2. Open browser to `http://localhost:5000`
 3. Upload a test email from `tests/fixtures/safe_newsletter.eml`
 4. Verify both rule-based and AI analysis work
@@ -274,7 +274,7 @@ pip install -r requirements.txt
 ```bash
 # Error: "Port 5000 is already in use"
 # Solution: Use different port
-PORT=8000 python app_phase2.py
+PORT=8000 python app.py
 # Or kill process using port 5000
 lsof -ti:5000 | xargs kill -9
 ```

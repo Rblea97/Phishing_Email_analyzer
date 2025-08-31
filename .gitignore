@@ -149,5 +149,5 @@ test_setup.py
 capture_screenshots.py
 capture_final_screenshots.py
 
-# Old app versions
-app.py
+# Code quality reports
+bandit-report.json

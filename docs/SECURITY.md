@@ -8,14 +8,14 @@ The AI-Powered Phishing Detection System is built with security as a foundationa
 
 ### Application Security
 - **Input Validation**: Comprehensive validation of all user inputs
-  - **Implementation**: [`app_phase2.py:88-120`](../app_phase2.py#L88-L120) - `validate_file_content()`
+  - **Implementation**: [`app.py:88-120`](../app.py#L88-L120) - `validate_file_content()`
   - **Testing**: [`tests/test_integration.py:45-70`](../tests/test_integration.py#L45-L70) - Security validation tests
 - **File Upload Security**: Type validation, size limits, malware scanning  
-  - **Implementation**: [`app_phase2.py:80-87`](../app_phase2.py#L80-L87) - `allowed_file()`
-  - **Configuration**: [`app_phase2.py:65-67`](../app_phase2.py#L65-L67) - `ALLOWED_EXTENSIONS`, size limits
+  - **Implementation**: [`app.py:80-87`](../app.py#L80-L87) - `allowed_file()`
+  - **Configuration**: [`app.py:65-67`](../app.py#L65-L67) - `ALLOWED_EXTENSIONS`, size limits
 - **Rate Limiting**: 10 AI requests per minute per IP address
-  - **Implementation**: [`app_phase2.py:49-56`](../app_phase2.py#L49-L56) - Flask-Limiter configuration
-  - **Endpoint Protection**: [`app_phase2.py:155`](../app_phase2.py#L155) - `@limiter.limit("10 per minute")`
+  - **Implementation**: [`app.py:49-56`](../app.py#L49-L56) - Flask-Limiter configuration
+  - **Endpoint Protection**: [`app.py:155`](../app.py#L155) - `@limiter.limit("10 per minute")`
 - **CSRF Protection**: Flask-WTF CSRF tokens on all forms
   - **Status**: Planned for production deployment
   - **Templates**: CSRF token integration in [`templates/upload.html`](../templates/upload.html)
@@ -26,7 +26,7 @@ The AI-Powered Phishing Detection System is built with security as a foundationa
 ### AI Integration Security
 - **API Key Management**: Environment variables only, never logged
   - **Implementation**: [`services/ai.py:51-60`](../services/ai.py#L51-L60) - Environment variable loading
-  - **Validation**: [`app_phase2.py:38-44`](../app_phase2.py#L38-L44) - API key verification without logging
+  - **Validation**: [`app.py:38-44`](../app.py#L38-L44) - API key verification without logging
 - **Token Limiting**: 4K token input limit with automatic truncation
   - **Implementation**: [`services/ai.py:24-26`](../services/ai.py#L24-L26) - `INPUT_TOKEN_LIMIT = 4000`
   - **Enforcement**: [`services/ai.py:130-150`](../services/ai.py#L130-L150) - Token counting and truncation
@@ -46,14 +46,14 @@ The AI-Powered Phishing Detection System is built with security as a foundationa
   - **Documentation**: [`docs/privacy-compliance.md`](privacy-compliance.md) - Complete PII protection details
   - **Testing**: [`tests/test_ai.py:80-120`](../tests/test_ai.py#L80-L120) - PII removal validation tests
 - **Database Security**: Parameterized queries, SQL injection prevention
-  - **Implementation**: [`app_phase2.py:73-77`](../app_phase2.py#L73-L77) - Database connection with row factory
+  - **Implementation**: [`app.py:73-77`](../app.py#L73-L77) - Database connection with row factory
   - **Queries**: All database operations use parameterized statements
   - **Testing**: [`tests/test_integration.py:150-180`](../tests/test_integration.py#L150-L180) - SQL injection prevention tests
 - **Audit Logging**: Complete analysis trail without sensitive data
-  - **Implementation**: [`app_phase2.py:33-36`](../app_phase2.py#L33-L36) - Logging configuration
+  - **Implementation**: [`app.py:33-36`](../app.py#L33-L36) - Logging configuration
   - **Policy**: No PII in logs, metadata and performance metrics only
 - **Secure Storage**: Local database with appropriate file permissions
-  - **Database Path**: [`app_phase2.py:67`](../app_phase2.py#L67) - `DATABASE_PATH` configuration
+  - **Database Path**: [`app.py:67`](../app.py#L67) - `DATABASE_PATH` configuration
   - **Permissions**: File system permissions restrict database access
 
 ### Infrastructure Security

@@ -1,5 +1,5 @@
 """
-AI-Powered Phishing Email Detection System - Phase 3 (AI Integration)
+AI-Powered Phishing Email Detection System
 Flask web application with dual analysis: rule-based detection + GPT-4o-mini AI
 """
 
@@ -20,11 +20,11 @@ import mimetypes
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-# Import our Phase 2 services
+# Import core services
 from services.parser import parse_email_content, get_email_hash, EmailParsingError
 from services.rules import analyze_email
 
-# Import Phase 3 AI services
+# Import AI services
 from services.ai import analyze_email_with_ai, get_ai_analyzer, reset_ai_analyzer
 
 # Load environment variables (force reload to override any existing env vars)
@@ -46,7 +46,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-key-change-in-production')
 app.config['MAX_CONTENT_LENGTH'] = 25 * 1024 * 1024  # 25MB max file size
 
-# Phase 3: Initialize rate limiter for AI requests
+# Initialize rate limiter for requests
 limiter = Limiter(
     key_func=get_remote_address,
     app=app,
@@ -57,9 +57,9 @@ limiter = Limiter(
 # AI service availability
 AI_ENABLED = bool(os.getenv('OPENAI_API_KEY'))
 if AI_ENABLED:
-    logger.info("Phase 3: AI analysis enabled with GPT-4o-mini")
+    logger.info("AI analysis enabled with GPT-4o-mini")
 else:
-    logger.warning("Phase 3: AI analysis disabled - OPENAI_API_KEY not set")
+    logger.warning("AI analysis disabled - OPENAI_API_KEY not set")
 
 # Configuration
 UPLOAD_FOLDER = 'uploads'
@@ -111,7 +111,7 @@ def validate_file_content(file):
 
 
 def store_email_analysis(email_content, filename, parsed_email, detection_result, ai_result=None):
-    """Store complete email analysis in database (Phase 3: includes AI results)"""
+    """Store complete email analysis in database (includes AI results)"""
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -186,7 +186,7 @@ def store_email_analysis(email_content, filename, parsed_email, detection_result
             detection_result.rules_fired
         ))
         
-        # Phase 3: Store AI detection results if available
+        # Store AI detection results if available
         if ai_result:
             cursor.execute('''
                 INSERT INTO ai_detections (
@@ -243,7 +243,7 @@ def store_email_analysis(email_content, filename, parsed_email, detection_result
 
 
 def get_analysis_by_id(email_id):
-    """Retrieve complete analysis by email ID (Phase 3: includes AI results)"""
+    """Retrieve complete analysis by email ID (includes AI results)"""
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -274,7 +274,7 @@ def get_analysis_by_id(email_id):
         
         parsed_row = cursor.fetchone()
         
-        # Phase 3: Get AI analysis results if available
+        # Get AI analysis results if available
         ai_analysis = None
         cursor.execute('''
             SELECT score, label, evidence_json, tokens_used, cost_estimate,
@@ -337,7 +337,7 @@ def index():
 
 
 @app.route('/upload', methods=['POST'])
-@limiter.limit("10 per minute")  # Phase 3: Rate limit AI requests
+@limiter.limit("10 per minute")  # Rate limit AI requests
 def upload_file():
     """Enhanced upload handler with full parsing and analysis"""
     try:
@@ -353,7 +353,7 @@ def upload_file():
             return redirect(request.url)
         
         if not allowed_file(file.filename):
-            flash('Invalid file type. Please upload .eml, .txt, or .msg files only.', 'error')
+            flash('Invalid file type. Please upload email files only: .eml (email export), .txt (plain text), or .msg (Outlook message).', 'error')
             return redirect(request.url)
         
         # Secure filename
@@ -369,10 +369,10 @@ def upload_file():
         file.seek(0)
         
         if not validate_file_content(file):
-            flash('Invalid file format. Please upload a valid email file.', 'error')
+            flash('Invalid file format. Please ensure the file contains valid email content with proper headers and structure.', 'error')
             return redirect(request.url)
         
-        # Parse email with our Phase 2 parser
+        # Parse email with our parser
         try:
             parsed_email = parse_email_content(email_content, secure_name)
         except EmailParsingError as e:
@@ -388,7 +388,7 @@ def upload_file():
             logger.error(f"Rule analysis failed for '{secure_name}': {str(e)}")
             return redirect(request.url)
         
-        # Phase 3: Run AI analysis if enabled
+        # Run AI analysis if enabled
         ai_result = None
         if AI_ENABLED:
             try:
@@ -421,12 +421,12 @@ def upload_file():
             return redirect(request.url)
     
     except RequestEntityTooLarge:
-        flash('File too large. Maximum size allowed is 25MB.', 'error')
+        flash('File too large. Please upload files smaller than 25MB. Consider using email export features to reduce size.', 'error')
         return redirect(request.url)
     
     except Exception as e:
         logger.error(f"Upload error: {str(e)}")
-        flash('An error occurred during file processing', 'error')
+        flash('An error occurred during file processing. Please check that your file is a valid email format and try again.', 'error')
         return redirect(request.url)
 
 
@@ -447,7 +447,7 @@ def view_analysis(email_id):
             analysis['parsed']['urls'] = json.loads(analysis['parsed']['urls_json'])
             analysis['parsed']['security_warnings'] = json.loads(analysis['parsed']['security_warnings'])
         
-        # Phase 3: Parse AI results if available
+        #  Parse AI results if available
         if analysis.get('ai_analysis'):
             try:
                 analysis['ai_analysis']['evidence'] = json.loads(analysis['ai_analysis']['evidence_json'])
@@ -472,7 +472,7 @@ def list_analyses():
 
 @app.route('/stats')
 def stats():
-    """Display system statistics with Phase 3 AI data"""
+    """Display system statistics with Current AI data"""
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -508,7 +508,7 @@ def stats():
         ''')
         daily_stats = [dict(row) for row in cursor.fetchall()]
         
-        # Phase 3: Get AI usage stats
+        #  Get AI usage stats
         ai_stats = None
         try:
             cursor.execute('''
@@ -554,7 +554,7 @@ def stats():
 
 @app.route('/health')
 def health_check():
-    """Enhanced health check for Phase 3 with AI service status"""
+    """Enhanced health check for Current with AI service status"""
     try:
         conn = get_db_connection()
         
@@ -563,7 +563,7 @@ def health_check():
         cursor.execute('SELECT COUNT(*) FROM emails')
         email_count = cursor.fetchone()[0]
         
-        # Check Phase 3 tables
+        # Check Current tables
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
         tables = [row[0] for row in cursor.fetchall()]
         
@@ -677,7 +677,7 @@ def internal_error(e):
 
 
 if __name__ == '__main__':
-    # Check if Phase 3 migration is needed
+    # Check if Current migration is needed
     if not os.path.exists(DATABASE_PATH):
         print("Database not found. Please run:")
         print("1. python init_db.py")
@@ -689,17 +689,17 @@ if __name__ == '__main__':
         conn = sqlite3.connect(DATABASE_PATH)
         cursor = conn.cursor()
         
-        # Check Phase 2 tables
+        # Check Current tables
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='emails'")
         if not cursor.fetchone():
-            print("Phase 2 tables not found. Please run:")
+            print("Current tables not found. Please run:")
             print("python migrate_to_phase2.py")
             exit(1)
         
-        # Check Phase 3 tables
+        # Check Current tables
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='ai_detections'")
         if not cursor.fetchone():
-            print("Phase 3 tables not found. Please run:")
+            print("Current tables not found. Please run:")
             print("python migrate_to_phase3.py")
             exit(1)
             
@@ -726,6 +726,6 @@ if __name__ == '__main__':
     debug_mode = os.getenv('FLASK_ENV') == 'development'
     port = int(os.getenv('PORT', 5000))
     
-    print(f"Starting Phase 3 (AI Integration) server on port {port}")
+    print(f"Starting Current (AI Integration) server on port {port}")
     print("Rate limits: 10 AI analyses per minute per IP")
     app.run(debug=debug_mode, host='0.0.0.0', port=port)
