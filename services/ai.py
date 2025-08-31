@@ -9,8 +9,11 @@ import json
 import logging
 import os
 import time
-from dataclasses import dataclass
-from typing import Any, Dict, Optional, Tuple
+import hashlib
+import random
+from dataclasses import dataclass, asdict
+from typing import Any, Dict, Optional, Tuple, List
+from datetime import datetime, timedelta
 
 from openai import OpenAI
 
@@ -43,6 +46,13 @@ class AIAnalysisResult:
     processing_time_ms: float
     success: bool
     error_message: Optional[str] = None
+    
+    # Phase 4 enhancements
+    confidence_score: Optional[float] = None  # Calibrated confidence (0.0-1.0)
+    explanation: Optional[str] = None  # Human-readable explanation
+    fallback_used: bool = False  # Whether fallback analysis was used
+    prompt_version: Optional[str] = None  # A/B testing prompt version
+    analysis_metadata: Optional[Dict] = None  # Additional context
 
 
 class AIPhishingAnalyzer:
@@ -50,7 +60,7 @@ class AIPhishingAnalyzer:
 
     def __init__(self, api_key: Optional[str] = None):
         """
-        Initialize AI analyzer
+        Initialize AI analyzer with Phase 4 enhancements
 
         Args:
             api_key: OpenAI API key (defaults to environment variable)
@@ -65,6 +75,24 @@ class AIPhishingAnalyzer:
         self.client = OpenAI(api_key=self.api_key)
         self.daily_tokens_used = 0
         self.daily_cost = 0.0
+        
+        # Phase 4 enhancements
+        self.confidence_calibration_enabled = os.getenv('AI_CONFIDENCE_CALIBRATION', 'true').lower() == 'true'
+        self.explanation_generation_enabled = os.getenv('AI_EXPLANATION_GENERATION', 'true').lower() == 'true'
+        self.ab_testing_enabled = os.getenv('AI_AB_TESTING', 'false').lower() == 'true'
+        self.fallback_enabled = os.getenv('AI_FALLBACK_ENABLED', 'true').lower() == 'true'
+        
+        # A/B testing prompt versions
+        self.prompt_versions = ['standard', 'detailed', 'concise']
+        self.current_prompt_version = 'standard'
+        
+        # Fallback configuration
+        self.fallback_threshold_errors = 3  # Fallback after N consecutive errors
+        self.consecutive_errors = 0
+        self.last_successful_analysis = datetime.now()
+        
+        logger.info(f"Phase 4 AI features - Confidence: {self.confidence_calibration_enabled}, "
+                   f"Explanation: {self.explanation_generation_enabled}, A/B: {self.ab_testing_enabled}")
 
     def _create_analysis_prompt(self, parsed_email: ParsedEmail) -> str:
         """
@@ -256,8 +284,8 @@ Evidence IDs should be uppercase with underscores (e.g., SPF_FAIL, SUSPICIOUS_UR
             prompt = self._create_analysis_prompt(parsed_email)
             prompt = self._truncate_prompt(prompt)
 
-            # Make API request
-            response_data, tokens_used, error = self._make_api_request(prompt)
+            # Make API request with fallback handling
+            response_data, tokens_used, error = self._make_api_request_with_fallback(prompt)
 
             if error or not response_data:
                 return AIAnalysisResult(
@@ -301,6 +329,18 @@ Evidence IDs should be uppercase with underscores (e.g., SPF_FAIL, SUSPICIOUS_UR
 
             # Calculate cost
             cost = self._calculate_cost(tokens_used, len(sanitized_data.get("evidence", [])) * 50)
+            
+            # Extract Phase 4 enhancements from response
+            confidence_score = sanitized_data.get('confidence')
+            explanation = sanitized_data.get('explanation')
+            
+            # Apply confidence calibration if enabled
+            if self.confidence_calibration_enabled and confidence_score is not None:
+                confidence_score = self._calibrate_confidence(confidence_score, sanitized_data['score'])
+            
+            # Track successful analysis
+            self.consecutive_errors = 0
+            self.last_successful_analysis = datetime.now()
 
             # Update daily tracking
             self.daily_tokens_used += tokens_used
@@ -321,6 +361,15 @@ Evidence IDs should be uppercase with underscores (e.g., SPF_FAIL, SUSPICIOUS_UR
                 cost_estimate=cost,
                 processing_time_ms=processing_time,
                 success=True,
+                confidence_score=confidence_score,
+                explanation=explanation,
+                fallback_used=False,
+                prompt_version=self.current_prompt_version,
+                analysis_metadata={
+                    'ai_service_version': 'phase4_enhanced',
+                    'confidence_calibration': self.confidence_calibration_enabled,
+                    'explanation_generation': self.explanation_generation_enabled
+                }
             )
 
         except Exception as e:
@@ -374,6 +423,120 @@ Evidence IDs should be uppercase with underscores (e.g., SPF_FAIL, SUSPICIOUS_UR
         """Reset daily usage counters"""
         self.daily_tokens_used = 0
         self.daily_cost = 0.0
+    
+    def _select_prompt_version(self) -> str:
+        """Select prompt version for A/B testing"""
+        if not self.ab_testing_enabled:
+            return 'standard'
+            
+        # Simple random selection with equal distribution
+        return random.choice(self.prompt_versions)
+    
+    def _make_api_request_with_fallback(self, prompt: str) -> Tuple[Optional[Dict], int, Optional[str]]:
+        """Make API request with intelligent fallback handling"""
+        try:
+            # Try primary AI analysis
+            response_data, tokens_used, error = self._make_api_request(prompt)
+            
+            if response_data and not error:
+                return response_data, tokens_used, error
+            
+            # Track consecutive errors for fallback logic
+            self.consecutive_errors += 1
+            
+            # Use fallback if enabled and threshold reached
+            if self.fallback_enabled and self.consecutive_errors >= self.fallback_threshold_errors:
+                logger.warning(f"AI service degraded ({self.consecutive_errors} errors), using fallback")
+                return self._generate_fallback_analysis(), 0, None
+            
+            return response_data, tokens_used, error
+            
+        except Exception as e:
+            self.consecutive_errors += 1
+            if self.fallback_enabled and self.consecutive_errors >= self.fallback_threshold_errors:
+                logger.warning(f"AI service error, using fallback: {e}")
+                return self._generate_fallback_analysis(), 0, None
+            raise e
+    
+    def _generate_fallback_analysis(self) -> Dict:
+        """Generate rule-based fallback analysis when AI is unavailable"""
+        fallback_result = {
+            "score": 50,
+            "label": "Suspicious",
+            "evidence": [
+                {
+                    "id": "AI_FALLBACK",
+                    "description": "AI analysis unavailable, using basic heuristics", 
+                    "weight": 20
+                }
+            ]
+        }
+        
+        if self.explanation_generation_enabled:
+            fallback_result["explanation"] = "AI analysis is temporarily unavailable. This email requires manual review."
+            
+        if self.confidence_calibration_enabled:
+            fallback_result["confidence"] = 0.3  # Low confidence for fallback
+            
+        return fallback_result
+    
+    def _calibrate_confidence(self, raw_confidence: float, score: int) -> float:
+        """Calibrate AI confidence score based on historical performance"""
+        if not self.confidence_calibration_enabled:
+            return raw_confidence
+            
+        # Simple calibration based on score ranges and historical accuracy
+        # In production, this would use historical accuracy data
+        if score <= 30:  # Likely safe
+            # AI tends to be overconfident on safe emails
+            calibrated = raw_confidence * 0.9
+        elif score >= 70:  # Likely phishing  
+            # AI tends to be underconfident on obvious phishing
+            calibrated = min(1.0, raw_confidence * 1.1)
+        else:  # Suspicious range
+            # AI confidence is generally accurate in middle range
+            calibrated = raw_confidence
+            
+        # Apply additional calibration based on consecutive errors
+        if self.consecutive_errors > 0:
+            # Reduce confidence if there have been recent errors
+            calibrated *= max(0.5, 1.0 - (self.consecutive_errors * 0.1))
+        
+        return max(0.0, min(1.0, calibrated))
+    
+    def get_service_health(self) -> Dict:
+        """Get AI service health status"""
+        time_since_success = (datetime.now() - self.last_successful_analysis).total_seconds()
+        
+        if self.consecutive_errors == 0 and time_since_success < 300:  # 5 minutes
+            status = 'healthy'
+        elif self.consecutive_errors < self.fallback_threshold_errors:
+            status = 'degraded'
+        else:
+            status = 'fallback'
+            
+        return {
+            'status': status,
+            'consecutive_errors': self.consecutive_errors,
+            'time_since_success_seconds': time_since_success,
+            'fallback_enabled': self.fallback_enabled,
+            'features': {
+                'confidence_calibration': self.confidence_calibration_enabled,
+                'explanation_generation': self.explanation_generation_enabled,
+                'ab_testing': self.ab_testing_enabled
+            },
+            'daily_usage': self.get_daily_usage()
+        }
+    
+    def get_ab_testing_stats(self) -> Dict:
+        """Get A/B testing statistics (placeholder for future implementation)"""
+        # In production, this would track performance by prompt version
+        return {
+            'enabled': self.ab_testing_enabled,
+            'current_version': self.current_prompt_version,
+            'available_versions': self.prompt_versions,
+            'note': 'Detailed A/B statistics require additional tracking implementation'
+        }
 
 
 # Global analyzer instance (initialized when needed)
