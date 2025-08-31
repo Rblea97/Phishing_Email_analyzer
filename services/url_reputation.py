@@ -6,17 +6,17 @@ This service provides threat intelligence for URLs found in emails,
 enhancing the detection capabilities beyond rule-based analysis.
 """
 
-import os
-import json
-import time
 import hashlib
+import json
 import logging
-from typing import Dict, List, Optional, Tuple
+import os
+import time
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Tuple
+from urllib.parse import quote_plus, urlparse
 
 import requests
-from urllib.parse import urlparse, quote_plus
 
 logger = logging.getLogger(__name__)
 

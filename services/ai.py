@@ -5,15 +5,15 @@ Provides structured phishing analysis using OpenAI GPT-4o-mini with comprehensiv
 security controls, cost monitoring, and response validation.
 """
 
+import hashlib
 import json
 import logging
 import os
-import time
-import hashlib
 import random
-from dataclasses import dataclass, asdict
-from typing import Any, Dict, Optional, Tuple, List
+import time
+from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta
+from typing import Any, Dict, List, Optional, Tuple
 
 from openai import OpenAI
 

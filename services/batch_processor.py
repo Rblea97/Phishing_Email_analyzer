@@ -6,32 +6,31 @@ Provides scalable background processing for analyzing multiple emails
 with progress tracking, result aggregation, and error handling.
 """
 
-import os
 import json
-import uuid
-import sqlite3
 import logging
-import time
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any, Tuple
-from dataclasses import dataclass, asdict
-from pathlib import Path
+import os
+import sqlite3
 import tempfile
+import time
+import uuid
 import zipfile
+from dataclasses import asdict, dataclass
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
 
 # Celery imports
 try:
-    from celery import Celery
+    from celery import Celery, signals
     from celery.result import AsyncResult
-    from celery import signals
     CELERY_AVAILABLE = True
 except ImportError:
     CELERY_AVAILABLE = False
 
-# Import our core services
-from services.parser import parse_email_content, EmailParsingError
-from services.rules import analyze_email
 from services.ai import analyze_email_with_ai
+# Import our core services
+from services.parser import EmailParsingError, parse_email_content
+from services.rules import analyze_email
 
 logger = logging.getLogger(__name__)
 
@@ -275,7 +274,8 @@ class BatchProcessor:
             # URL reputation if enabled
             if config.enable_url_reputation and parsed_email.urls:
                 try:
-                    from services.url_reputation import get_url_reputation_service
+                    from services.url_reputation import \
+                        get_url_reputation_service
                     url_service = get_url_reputation_service()
                     url_results = url_service.analyze_urls(parsed_email.urls)
                     result['url_analysis'] = {

@@ -6,13 +6,13 @@ Provides intelligent caching for URL reputation analysis, AI results,
 and email processing to minimize API calls and improve response times.
 """
 
-import os
 import json
 import logging
+import os
 import pickle
-from typing import Any, Optional, Dict, List
-from datetime import datetime, timedelta
 from dataclasses import asdict
+from datetime import datetime, timedelta
+from typing import Any, Dict, List, Optional
 
 try:
     import redis

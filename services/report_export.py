@@ -6,27 +6,28 @@ Provides professional reporting capabilities for single analyses,
 batch processing results, and system performance metrics.
 """
 
-import os
-import json
-import sqlite3
-import logging
-import uuid
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any, Union
-from dataclasses import dataclass, asdict
-from pathlib import Path
-import tempfile
 import base64
+import json
+import logging
+import os
+import sqlite3
+import tempfile
+import uuid
+from dataclasses import asdict, dataclass
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Union
 
 # PDF generation imports
 try:
     from reportlab.lib import colors
-    from reportlab.lib.pagesizes import letter, A4
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-    from reportlab.platypus import PageBreak, Image as RLImage
-    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.units import inch
     from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
+    from reportlab.lib.pagesizes import A4, letter
+    from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+    from reportlab.lib.units import inch
+    from reportlab.platypus import Image as RLImage
+    from reportlab.platypus import (PageBreak, Paragraph, SimpleDocTemplate,
+                                    Spacer, Table, TableStyle)
     REPORTLAB_AVAILABLE = True
 except ImportError:
     REPORTLAB_AVAILABLE = False
