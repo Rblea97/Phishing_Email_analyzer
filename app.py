@@ -261,12 +261,23 @@ def store_email_analysis(email_content, filename, parsed_email, detection_result
                         result_data['confidence_score'],
                         result_data['source'],
                         json.dumps(result_data['details'] or {}),
-                        result_data['analysis_time'],
-                        result_data['analysis_time']  # For now, set same as analysis time
+                        result_data['analysis_time'].isoformat() if hasattr(result_data['analysis_time'], 'isoformat') else result_data['analysis_time'],
+                        result_data['analysis_time'].isoformat() if hasattr(result_data['analysis_time'], 'isoformat') else result_data['analysis_time']  # For now, set same as analysis time
                     ))
                 
                 # Store URL analysis summary for this email
-                url_summary_json = json.dumps(url_analysis)
+                # Convert datetime objects to strings before JSON serialization
+                def convert_datetime_to_string(obj):
+                    if isinstance(obj, dict):
+                        return {k: convert_datetime_to_string(v) for k, v in obj.items()}
+                    elif isinstance(obj, list):
+                        return [convert_datetime_to_string(v) for v in obj]
+                    elif hasattr(obj, 'isoformat'):  # datetime object
+                        return obj.isoformat()
+                    return obj
+                
+                url_analysis_serializable = convert_datetime_to_string(url_analysis)
+                url_summary_json = json.dumps(url_analysis_serializable)
                 
                 # Try to add URL analysis summary to existing tables if columns exist
                 try:
