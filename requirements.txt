@@ -39,9 +39,9 @@ openai>=1.35.0  # Updated for compatibility
 jsonschema==4.20.0
 Flask-Limiter==3.5.0
 
-# Future URL Analysis (Phase 4)
-# requests==2.31.0
-# urllib3==2.1.0
+# URL Analysis & External APIs (Phase 4) - Active
+requests==2.31.0
+urllib3==2.1.0
 
 # Future Database Migration (Phase 6)
 # psycopg2-binary==2.9.7
@@ -52,6 +52,14 @@ Flask-Limiter==3.5.0
 playwright==1.40.0
 pillow==10.1.0
 
-# Future Caching (Phase 6)
-# redis==5.0.1
-# Flask-Caching==2.1.0
+# Caching & Background Jobs (Phase 4) - Active
+redis==5.0.1
+Flask-Caching==2.1.0
+celery==5.3.4
+
+# Report Generation (Phase 4) - Active
+reportlab==4.0.7
+weasyprint==60.2
+
+# Enhanced Security & Monitoring (Phase 4) - Active
+psutil==5.9.6
