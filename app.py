@@ -27,6 +27,13 @@ from services.rules import analyze_email
 # Import AI services
 from services.ai import analyze_email_with_ai, get_ai_analyzer, reset_ai_analyzer
 
+# Import Phase 4 services
+from services.url_reputation import get_url_reputation_service
+from services.cache_manager import get_cache_manager
+from services.batch_processor import get_batch_processor
+from services.monitoring import get_performance_monitor
+from services.report_export import get_export_service
+
 # Load environment variables (force reload to override any existing env vars)
 load_dotenv(override=True)
 
@@ -69,6 +76,24 @@ DATABASE_PATH = os.getenv('DATABASE_PATH', 'phishing_detector.db')
 # Ensure upload directory exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# Initialize Phase 4 services
+try:
+    # Initialize performance monitoring
+    performance_monitor = get_performance_monitor()
+    performance_monitor.start_background_monitoring()
+    logger.info("Phase 4 services initialized successfully")
+    
+    # Initialize cache manager
+    cache_manager = get_cache_manager()
+    cache_health = cache_manager.health_check()
+    logger.info(f"Cache manager status: {cache_health.get('status', 'unknown')}")
+    
+    PHASE4_ENABLED = True
+    
+except Exception as e:
+    logger.warning(f"Phase 4 services initialization failed: {e}")
+    PHASE4_ENABLED = False
+
 
 def get_db_connection():
     """Get database connection with row factory"""
@@ -110,7 +135,7 @@ def validate_file_content(file):
         return False
 
 
-def store_email_analysis(email_content, filename, parsed_email, detection_result, ai_result=None):
+def store_email_analysis(email_content, filename, parsed_email, detection_result, ai_result=None, url_analysis=None):
     """Store complete email analysis in database (includes AI results)"""
     try:
         conn = get_db_connection()
@@ -217,6 +242,46 @@ def store_email_analysis(email_content, filename, parsed_email, detection_result
             ''', (ai_result.tokens_used, ai_result.cost_estimate, 
                   ai_result.tokens_used, ai_result.cost_estimate))
         
+        # Store URL reputation analysis results if available (Phase 4)
+        if url_analysis and PHASE4_ENABLED:
+            try:
+                # Store individual URL analyses in url_analysis table
+                for url, result_data in url_analysis['results'].items():
+                    cursor.execute('''
+                        INSERT OR REPLACE INTO url_analysis (
+                            url_hash, original_url, is_malicious, threat_types, 
+                            confidence_score, analysis_source, analysis_details,
+                            created_at, expires_at
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (
+                        result_data['url'][:64],  # Use first 64 chars as hash for simplicity
+                        result_data['url'],
+                        result_data['is_malicious'],
+                        json.dumps(result_data['threat_types']),
+                        result_data['confidence_score'],
+                        result_data['source'],
+                        json.dumps(result_data['details'] or {}),
+                        result_data['analysis_time'],
+                        result_data['analysis_time']  # For now, set same as analysis time
+                    ))
+                
+                # Store URL analysis summary for this email
+                url_summary_json = json.dumps(url_analysis)
+                
+                # Try to add URL analysis summary to existing tables if columns exist
+                try:
+                    cursor.execute('''
+                        UPDATE email_parsed 
+                        SET url_analysis_summary = ?
+                        WHERE email_id = ?
+                    ''', (url_summary_json, email_id))
+                except sqlite3.OperationalError:
+                    # Column doesn't exist yet, that's okay
+                    pass
+                    
+            except Exception as e:
+                logger.warning(f"Failed to store URL analysis results: {e}")
+        
         conn.commit()
         
         # Log successful analysis (no PII)
@@ -230,6 +295,12 @@ def store_email_analysis(email_content, filename, parsed_email, detection_result
                        f"ai_tokens={ai_result.tokens_used}, "
                        f"ai_cost=${ai_result.cost_estimate:.4f}, "
                        f"ai_success={ai_result.success}")
+        
+        if url_analysis:
+            summary = url_analysis['summary']
+            log_msg += (f", urls_analyzed={summary['total_urls']}, "
+                       f"malicious_urls={summary['malicious_urls']}, "
+                       f"avg_confidence={summary['average_confidence']}")
         
         logger.info(log_msg)
         
@@ -410,8 +481,35 @@ def upload_file():
         else:
             logger.debug("AI analysis skipped - not enabled")
         
-        # Store results in database (both rule-based and AI)
-        email_id = store_email_analysis(email_content, secure_name, parsed_email, detection_result, ai_result)
+        # Run URL reputation analysis if Phase 4 is enabled
+        url_analysis = None
+        if PHASE4_ENABLED and parsed_email.urls:
+            try:
+                logger.info(f"Running URL reputation analysis for '{secure_name}' ({len(parsed_email.urls)} URLs)")
+                url_service = get_url_reputation_service()
+                url_results = url_service.analyze_urls([url.normalized for url in parsed_email.urls[:10]])
+                url_analysis = {
+                    'results': {url: asdict(result) for url, result in url_results.items()},
+                    'summary': url_service.get_reputation_summary(url_results)
+                }
+                logger.info(f"URL analysis completed: {url_analysis['summary']['malicious_urls']} malicious URLs found")
+            except Exception as e:
+                logger.error(f"URL reputation analysis failed for '{secure_name}': {e}")
+        
+        # Record performance metrics if Phase 4 is enabled
+        if PHASE4_ENABLED:
+            try:
+                performance_monitor = get_performance_monitor()
+                performance_monitor.record_metric(
+                    'email_analysis', 'single_email_processing', 
+                    time.time() * 1000, 'milliseconds', 'upload_handler',
+                    {'filename': secure_name, 'has_urls': len(parsed_email.urls) > 0}
+                )
+            except Exception as e:
+                logger.debug(f"Performance metric recording failed: {e}")
+        
+        # Store results in database (rule-based, AI, and URL analysis)
+        email_id = store_email_analysis(email_content, secure_name, parsed_email, detection_result, ai_result, url_analysis)
         
         if email_id:
             flash(f'Email analyzed successfully!', 'success')
@@ -643,6 +741,215 @@ def health_check():
     
     finally:
         conn.close()
+
+
+# ==================== Phase 4 Routes ====================
+
+@app.route('/api/batch', methods=['POST'])
+@limiter.limit("5 per minute")  # More restrictive for batch operations
+def create_batch_job():
+    """Create new batch processing job"""
+    if not PHASE4_ENABLED:
+        return jsonify({'error': 'Phase 4 features not available'}), 503
+        
+    try:
+        batch_processor = get_batch_processor()
+        
+        # Handle file uploads
+        files = request.files.getlist('files')
+        if not files:
+            return jsonify({'error': 'No files provided'}), 400
+            
+        # Prepare email files
+        email_files = []
+        for file in files:
+            if file.filename and allowed_file(file.filename):
+                content = file.read()
+                if len(content) > 0:
+                    email_files.append((file.filename, content))
+        
+        if not email_files:
+            return jsonify({'error': 'No valid email files found'}), 400
+            
+        # Create batch job
+        from services.batch_processor import BatchJobConfig
+        config = BatchJobConfig(
+            enable_ai_analysis=request.form.get('enable_ai', 'true').lower() == 'true',
+            enable_url_reputation=request.form.get('enable_url', 'true').lower() == 'true'
+        )
+        
+        job_id = batch_processor.create_batch_job(email_files, config)
+        
+        return jsonify({
+            'job_id': job_id,
+            'status': 'created',
+            'total_files': len(email_files)
+        })
+        
+    except Exception as e:
+        logger.error(f"Batch job creation failed: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/batch/<job_id>')
+def get_batch_status(job_id):
+    """Get batch job status"""
+    if not PHASE4_ENABLED:
+        return jsonify({'error': 'Phase 4 features not available'}), 503
+        
+    try:
+        batch_processor = get_batch_processor()
+        status = batch_processor.get_job_status(job_id)
+        
+        if not status:
+            return jsonify({'error': 'Job not found'}), 404
+            
+        return jsonify(asdict(status))
+        
+    except Exception as e:
+        logger.error(f"Failed to get batch status: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/batch/<job_id>/results')
+def get_batch_results(job_id):
+    """Get batch job results"""
+    if not PHASE4_ENABLED:
+        return jsonify({'error': 'Phase 4 features not available'}), 503
+        
+    try:
+        batch_processor = get_batch_processor()
+        results = batch_processor.get_job_results(job_id)
+        
+        if results is None:
+            return jsonify({'error': 'Results not found'}), 404
+            
+        return jsonify({'job_id': job_id, 'results': results})
+        
+    except Exception as e:
+        logger.error(f"Failed to get batch results: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/export', methods=['POST'])
+def create_export_request():
+    """Create export request for reports"""
+    if not PHASE4_ENABLED:
+        return jsonify({'error': 'Phase 4 features not available'}), 503
+        
+    try:
+        export_service = get_export_service()
+        
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No request data provided'}), 400
+            
+        export_type = data.get('export_type', 'json')
+        data_type = data.get('data_type', 'single_analysis')  
+        reference_id = data.get('reference_id')
+        settings = data.get('settings', {})
+        
+        if not reference_id:
+            return jsonify({'error': 'reference_id is required'}), 400
+            
+        request_id = export_service.create_export_request(
+            export_type, data_type, reference_id, settings
+        )
+        
+        # Process the export synchronously for now
+        result = export_service.process_export_request(request_id)
+        
+        return jsonify({
+            'request_id': request_id,
+            'status': result.status,
+            'file_path': result.file_path if result.status == 'completed' else None,
+            'error_message': result.error_message
+        })
+        
+    except Exception as e:
+        logger.error(f"Export request failed: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/performance')
+def get_performance_metrics():
+    """Get system performance metrics"""
+    if not PHASE4_ENABLED:
+        return jsonify({'error': 'Phase 4 features not available'}), 503
+        
+    try:
+        performance_monitor = get_performance_monitor()
+        
+        hours = request.args.get('hours', 24, type=int)
+        summary = performance_monitor.get_performance_summary(hours)
+        
+        return jsonify(summary)
+        
+    except Exception as e:
+        logger.error(f"Failed to get performance metrics: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/performance/health')
+def get_system_health():
+    """Get detailed system health status"""
+    if not PHASE4_ENABLED:
+        return jsonify({'error': 'Phase 4 features not available'}), 503
+        
+    try:
+        performance_monitor = get_performance_monitor()
+        health = performance_monitor.collect_system_metrics()
+        
+        return jsonify(asdict(health))
+        
+    except Exception as e:
+        logger.error(f"Failed to get system health: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/cache/stats')  
+def get_cache_stats():
+    """Get cache performance statistics"""
+    if not PHASE4_ENABLED:
+        return jsonify({'error': 'Phase 4 features not available'}), 503
+        
+    try:
+        cache_manager = get_cache_manager()
+        stats = cache_manager.get_stats()
+        
+        return jsonify(stats)
+        
+    except Exception as e:
+        logger.error(f"Failed to get cache stats: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/url-reputation', methods=['POST'])
+def analyze_urls():
+    """Analyze URLs for reputation"""
+    if not PHASE4_ENABLED:
+        return jsonify({'error': 'Phase 4 features not available'}), 503
+        
+    try:
+        data = request.get_json()
+        if not data or 'urls' not in data:
+            return jsonify({'error': 'URLs required'}), 400
+            
+        urls = data['urls']
+        if not isinstance(urls, list) or len(urls) == 0:
+            return jsonify({'error': 'Valid URL list required'}), 400
+            
+        url_service = get_url_reputation_service()
+        results = url_service.analyze_urls(urls[:10])  # Limit to 10 URLs
+        
+        # Convert results to serializable format
+        serializable_results = {}
+        for url, result in results.items():
+            serializable_results[url] = asdict(result)
+            
+        summary = url_service.get_reputation_summary(results)
+        
+        return jsonify({
+            'results': serializable_results,
+            'summary': summary
+        })
+        
+    except Exception as e:
+        logger.error(f"URL reputation analysis failed: {e}")
+        return jsonify({'error': str(e)}), 500
 
 
 @app.errorhandler(413)
