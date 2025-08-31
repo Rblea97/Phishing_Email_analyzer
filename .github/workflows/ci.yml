@@ -35,11 +35,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
-    - name: Initialize database
+    - name: Setup test environment
       run: |
-        python init_db.py
-        python migrate_to_phase2.py
-        echo "y" | python migrate_to_phase3.py
+        # Tests use in-memory database - no initialization needed
+        echo "Test environment ready"
     
     - name: Run tests with coverage
       run: |
