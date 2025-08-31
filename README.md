@@ -1,16 +1,22 @@
 # 🛡️ AI-Powered Phishing Detection System
 ## 🎓 Computer Science Portfolio Project by Richard Blea
+### 🚀 **v2.0.0 Phase 4: Advanced Features & Production-Ready Architecture** 
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
 [![Flask](https://img.shields.io/badge/Flask-3.0.0-green)](https://flask.palletsprojects.com/)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-orange)](https://openai.com/)
+[![Redis](https://img.shields.io/badge/Redis-7.2-red)](https://redis.io/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue)](docker-compose.yml)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/badge/Coverage-83%25-yellow)](docs/evaluation.md)
 [![Security](https://img.shields.io/badge/Security-First-red)](docs/SECURITY.md)
+[![Version](https://img.shields.io/badge/Version-2.0.0--Phase4-brightgreen)](PHASE4_COMPLETION_SUMMARY.md)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Richard%20Blea-blue)](https://www.linkedin.com/in/richard-blea-748914159)
 
-> **Academic capstone project demonstrating advanced cybersecurity, AI/ML integration, and full-stack development skills. Built as a comprehensive phishing detection system combining rule-based analysis with OpenAI GPT-4o-mini for intelligent threat assessment.**
+> **🎊 MAJOR UPDATE: Phase 4 Complete - Advanced Cybersecurity Engineering Skills Demonstrated!**
+> 
+> **Academic cybersecurity project showcasing advanced software engineering, AI/ML integration, microservices architecture, and production deployment skills. Demonstrates my ability to build scalable, production-ready security systems with real-time threat intelligence, batch processing, caching, and comprehensive monitoring.**
 
 ### 👨‍💻 About the Developer
 **Richard Blea** | CU Denver Computer Science Student | Cybersecurity Professional in Training  
@@ -19,20 +25,29 @@
 
 ## 🎯 Project Overview
 
-This personal cybersecurity project showcases advanced computer science skills through a sophisticated phishing detection system. Developed during Fall 2024 semester and inspired by coursework in mobile security at CU Denver, it demonstrates my ability to integrate modern AI technologies with traditional cybersecurity approaches.
+This personal cybersecurity project demonstrates advanced software engineering and security skills through a sophisticated phishing detection system. What started as a coursework-inspired project has evolved into a **production-ready security platform** (v2.0.0-Phase4) showcasing modern development practices and cybersecurity technologies.
 
-### 🎓 Skills Development Focus
-- **Threat Detection & Analysis**: Email security protocols, phishing pattern recognition, incident response
-- **Security Operations**: Rule-based detection engines, log analysis, evidence collection and documentation
-- **Network Security**: Email header analysis, SPF/DKIM/DMARC authentication, suspicious domain identification
-- **Security Tools & Automation**: Python scripting for security analysis, API integration, automated threat assessment
-- **Incident Documentation**: Detailed evidence reporting, risk scoring methodologies, security documentation practices
+**🚀 Phase 4 Technical Achievement:** Successfully designed and implemented 5 microservices, 8 REST API endpoints, real-time threat intelligence integration, async batch processing, Redis caching, and comprehensive system monitoring - demonstrating my ability to architect and deploy complex, scalable security systems.
 
-### 🔧 Technical Implementation
-- **Rule-Based Engine**: 9 weighted detection rules with evidence collection
-- **AI Analysis**: GPT-4o-mini integration with structured cybersecurity prompts
-- **Professional Interface**: Bootstrap-powered dashboard with tabbed results
-- **Enterprise Features**: Rate limiting, cost monitoring, and comprehensive security
+### 🎓 Technical Skills Demonstrated (Phase 4)
+- **Software Architecture**: Microservices design, service orchestration, graceful degradation patterns
+- **API Integration**: Google Safe Browsing & VirusTotal APIs with intelligent rate limiting and caching
+- **Performance Engineering**: Redis caching, async processing, sub-second response times
+- **DevOps & Deployment**: Docker containerization, health monitoring, production-ready logging
+- **RESTful API Design**: 8 well-documented endpoints with proper validation and error handling
+- **Async Processing**: Celery-based background job processing for scalable batch operations
+- **Advanced AI/ML**: Confidence calibration, explanation generation, intelligent fallback mechanisms
+- **Data Export & Reporting**: PDF generation, structured JSON export, automated cleanup systems
+
+### 🏗️ System Architecture (Phase 4)
+- **Microservices Design**: 5 independent services demonstrating scalable architecture patterns
+- **Threat Intelligence Integration**: Google Safe Browsing & VirusTotal API integration
+- **Caching Layer**: Redis implementation with intelligent fallback to memory caching
+- **Background Processing**: Celery workers for handling batch email analysis jobs
+- **Enhanced AI Pipeline**: Confidence calibration, explanation generation, A/B testing framework
+- **Report Generation**: PDF/JSON export system with async processing capabilities
+- **System Monitoring**: Real-time performance metrics, health checks, and comprehensive logging
+- **RESTful API Suite**: 8 professional endpoints showcasing modern API design principles
 
 ## 🎬 Live Demo
 
@@ -89,17 +104,28 @@ make dev
 make run
 ```
 
-### Docker Setup (Recommended)
+### 🐳 Docker Deployment (Production Ready)
 
 ```bash
-# Build and run with Docker
+# Clone and set up Phase 4 enterprise platform
 git clone https://github.com/Rblea97/Phishing_Email_analyzer.git
 cd Phishing_Email_analyzer
 cp .env.example .env
-# Add your OpenAI API key to .env
-make docker-build
-make docker-run
+
+# Configure Phase 4 APIs (see docs/EXTERNAL_APIS.md)
+# Add to .env:
+# OPENAI_API_KEY=your-openai-key
+# GOOGLE_SAFE_BROWSING_API_KEY=your-gsb-key  
+# VIRUSTOTAL_API_KEY=your-vt-key
+
+# Deploy full Phase 4 stack
+docker-compose up -d
 ```
+
+**Phase 4 Services Started:**
+- 🌐 **Web Application** (Flask) - `http://localhost:5000`
+- 💾 **Redis Cache** - High-performance caching layer
+- ⚙️ **Background Workers** - Async batch processing
 
 ### Manual Installation
 
@@ -157,13 +183,24 @@ make clean     # Clean temporary files
 make build     # Production build with all checks
 ```
 
-## 🚀 Features
+## 🚀 Technical Features & Capabilities
 
-### 🔍 Dual Analysis Engine
-- **Rule-Based Detection**: 9 sophisticated rules covering common phishing indicators
-- **AI-Powered Analysis**: GPT-4o-mini with cybersecurity-focused prompts
-- **Evidence Collection**: Detailed breakdown of detection reasoning
-- **Risk Scoring**: 0-100 scoring system with confidence levels
+### 🔍 Multi-Engine Detection System
+- **Rule-Based Engine**: 9 sophisticated detection rules with comprehensive evidence collection
+- **AI-Enhanced Analysis**: GPT-4o-mini integration with confidence calibration and explanations
+- **URL Reputation Analysis**: Real-time threat intelligence from Google Safe Browsing & VirusTotal
+- **Batch Processing**: Scalable bulk analysis using async Celery workers
+- **Intelligent Scoring**: 0-100 risk assessment with multi-source validation and fallbacks
+
+### 🌐 RESTful API Suite (Phase 4)
+- **`/api/performance`** - Real-time system performance metrics and monitoring
+- **`/api/performance/health`** - Comprehensive service health diagnostics
+- **`/api/cache/stats`** - Cache performance analytics and hit/miss statistics
+- **`/api/url-reputation`** - On-demand URL threat intelligence analysis
+- **`/api/batch`** - Bulk email processing job creation and management
+- **`/api/batch/<id>`** - Batch job status monitoring and progress tracking
+- **`/api/batch/<id>/results`** - Completed batch analysis result retrieval
+- **`/api/export`** - Professional report generation (PDF/JSON formats)
 
 #### 📋 Detection Rules Summary
 
@@ -181,11 +218,21 @@ make build     # Production build with all checks
 
 *See [test fixtures](tests/fixtures/) for real examples of these rules in action.*
 
-### 🛡️ Security Features
-- **Secure File Upload**: Type validation, size limits, malware protection
-- **Rate Limiting**: API abuse prevention (10 requests/min per IP)
-- **Cost Controls**: Token usage monitoring and spending alerts
-- **Input Sanitization**: Comprehensive validation and error handling
+### ⚡ Performance & Infrastructure (Phase 4)
+- **Caching Implementation**: Redis integration with intelligent memory fallback mechanisms
+- **System Monitoring**: Real-time health checks, performance metrics, and comprehensive logging
+- **Async Processing**: Celery-based background job processing for scalable operations
+- **Container Deployment**: Docker Compose multi-service orchestration
+- **Fault Tolerance**: Graceful service degradation with automatic fallback systems
+- **Report Generation**: PDF/JSON export using ReportLab and WeasyPrint libraries
+
+### 🛡️ Security & Quality Features
+- **Rate Limiting**: Intelligent API throttling (10 requests/minute per IP address)
+- **Input Validation**: Comprehensive request sanitization and robust error handling
+- **Secure File Handling**: Type validation, size limits, and malware protection measures
+- **Configuration Security**: Environment variable protection with masked logging
+- **Cost Monitoring**: OpenAI token usage tracking with automated spending alerts
+- **Service Resilience**: Independent microservice failure handling and recovery
 
 ### 📊 Professional Interface
 - **Tabbed Results**: Clean separation of rule-based vs AI analysis
@@ -319,6 +366,12 @@ All claims in this README are backed by detailed documentation with implementati
 - **[API Reference](docs/API.md)** - Complete API documentation with examples
 - **[Installation Guide](docs/INSTALLATION.md)** - Setup and deployment instructions
 - **[Threat Model](docs/threat-model.md)** - Security threat analysis and data flow documentation
+
+### 🆕 Phase 4 Documentation
+- **[Phase 4 Completion Summary](PHASE4_COMPLETION_SUMMARY.md)** - Comprehensive overview of all Phase 4 enhancements
+- **[Phase 4 Testing Report](PHASE4_TESTING_REPORT.md)** - Detailed testing methodology and production readiness assessment
+- **[External APIs Setup](docs/EXTERNAL_APIS.md)** - Step-by-step guide for configuring Google Safe Browsing & VirusTotal
+- **[Docker Deployment](docker-compose.yml)** - Multi-service container orchestration for production deployment
 
 *All documentation includes implementation references, test validation, and external standard compliance.*
 
