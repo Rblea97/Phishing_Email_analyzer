@@ -35,8 +35,14 @@ except ImportError:
 try:
     import weasyprint
     WEASYPRINT_AVAILABLE = True
-except ImportError:
+except (ImportError, OSError) as e:
+    # Handle both ImportError and OSError (for missing system libraries)
     WEASYPRINT_AVAILABLE = False
+    if 'gobject' in str(e) or 'cannot load library' in str(e):
+        pass  # Expected on Windows without GTK libraries
+    else:
+        import logging
+        logging.getLogger(__name__).warning(f"WeasyPrint unavailable: {e}")
 
 logger = logging.getLogger(__name__)
 
