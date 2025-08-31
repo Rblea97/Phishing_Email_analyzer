@@ -582,6 +582,7 @@ def list_analyses():
 @app.route('/stats')
 def stats():
     """Display system statistics with Current AI data"""
+    conn = None
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
@@ -589,6 +590,7 @@ def stats():
         # Get total analyses
         cursor.execute('SELECT COUNT(*) FROM emails')
         total_analyses = cursor.fetchone()[0]
+        logger.info(f"Total analyses: {total_analyses}")
         
         # Get analyses by label
         cursor.execute('''
@@ -597,7 +599,10 @@ def stats():
             GROUP BY label
             ORDER BY count DESC
         ''')
-        label_stats = [dict(row) for row in cursor.fetchall()]
+        label_stats = []
+        for row in cursor.fetchall():
+            label_stats.append({'label': row['label'], 'count': row['count']})
+        logger.info(f"Label stats: {label_stats}")
         
         # Get average score by label
         cursor.execute('''
@@ -605,7 +610,10 @@ def stats():
             FROM detections
             GROUP BY label
         ''')
-        score_stats = [dict(row) for row in cursor.fetchall()]
+        score_stats = []
+        for row in cursor.fetchall():
+            score_stats.append({'label': row['label'], 'avg_score': row['avg_score'], 'count': row['count']})
+        logger.info(f"Score stats: {score_stats}")
         
         # Get daily stats
         cursor.execute('''
@@ -615,7 +623,10 @@ def stats():
             GROUP BY DATE(uploaded_at)
             ORDER BY date DESC
         ''')
-        daily_stats = [dict(row) for row in cursor.fetchall()]
+        daily_stats = []
+        for row in cursor.fetchall():
+            daily_stats.append({'date': row['date'], 'count': row['count']})
+        logger.info(f"Daily stats: {daily_stats}")
         
         #  Get AI usage stats
         ai_stats = None
@@ -623,15 +634,18 @@ def stats():
             cursor.execute('''
                 SELECT SUM(requests_count) as total_requests,
                        SUM(tokens_used) as total_tokens,
-                       SUM(total_cost) as total_cost,
-                       AVG(success_rate) as avg_success_rate
+                       SUM(total_cost) as total_cost
                 FROM ai_usage_stats
                 WHERE date >= date('now', '-30 days')
             ''')
             ai_row = cursor.fetchone()
             
             if ai_row and ai_row[0]:  # If there are AI stats
-                ai_stats = dict(ai_row)
+                ai_stats = {
+                    'total_requests': ai_row[0],
+                    'total_tokens': ai_row[1], 
+                    'total_cost': ai_row[2]
+                }
                 
                 # Get recent daily AI usage
                 cursor.execute('''
@@ -640,11 +654,20 @@ def stats():
                     WHERE date >= date('now', '-7 days')
                     ORDER BY date DESC
                 ''')
-                ai_stats['daily'] = [dict(row) for row in cursor.fetchall()]
+                ai_stats['daily'] = []
+                for row in cursor.fetchall():
+                    ai_stats['daily'].append({
+                        'date': row['date'], 
+                        'requests_count': row['requests_count'],
+                        'tokens_used': row['tokens_used'],
+                        'total_cost': row['total_cost']
+                    })
+            logger.info(f"AI stats: {ai_stats}")
         except Exception as e:
             logger.warning(f"AI stats retrieval error: {e}")
             ai_stats = None
         
+        logger.info("Rendering stats template...")
         return render_template('stats.html', 
                              total_analyses=total_analyses,
                              label_stats=label_stats,
@@ -654,11 +677,12 @@ def stats():
                              ai_enabled=AI_ENABLED)
         
     except Exception as e:
-        logger.error(f"Stats error: {str(e)}")
+        logger.error(f"Stats error: {str(e)}", exc_info=True)
         flash('Error retrieving statistics', 'error')
         return redirect(url_for('index'))
     finally:
-        conn.close()
+        if conn:
+            conn.close()
 
 
 @app.route('/health')

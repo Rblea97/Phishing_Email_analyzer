@@ -86,14 +86,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for date, count in daily_stats %}
+                            {% for stat in daily_stats %}
                             <tr>
                                 <td>
                                     <i class="fas fa-calendar me-2 text-muted"></i>
-                                    {{ date }}
+                                    {{ stat.date }}
                                 </td>
                                 <td>
-                                    <span class="badge bg-primary">{{ count }}</span>
+                                    <span class="badge bg-primary">{{ stat.count }}</span>
                                 </td>
                                 <td>
                                     <span class="badge bg-success">
@@ -104,11 +104,11 @@
                                     <div class="progress" style="height: 20px;">
                                         <div class="progress-bar" 
                                              role="progressbar" 
-                                             style="width: {{ (count / ([daily_stats|map(attribute=1)|max, 1]|max)) * 100 }}%"
-                                             aria-valuenow="{{ count }}" 
+                                             style="width: {{ (stat.count / ([daily_stats|map(attribute='count')|max, 1]|max)) * 100 }}%"
+                                             aria-valuenow="{{ stat.count }}" 
                                              aria-valuemin="0" 
-                                             aria-valuemax="{{ daily_stats|map(attribute=1)|max }}">
-                                            {{ count }}
+                                             aria-valuemax="{{ daily_stats|map(attribute='count')|max }}">
+                                            {{ stat.count }}
                                         </div>
                                     </div>
                                 </td>
