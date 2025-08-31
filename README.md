@@ -150,6 +150,22 @@ make build     # Production build with all checks
 - **Evidence Collection**: Detailed breakdown of detection reasoning
 - **Risk Scoring**: 0-100 scoring system with confidence levels
 
+#### 📋 Detection Rules Summary
+
+| Rule ID | Description | Severity (Weight) | Example Detection |
+|---------|-------------|-------------------|------------------|
+| **HEADER_MISMATCH** | Display name domain differs from From domain | High (25) | "Microsoft Office 365" from `notifications@fake-service123.com` |
+| **AUTH_FAIL_HINTS** | SPF/DKIM/DMARC authentication failures | High (30) | `spf=fail smtp.mailfrom=admin@suspicious.com` |
+| **REPLYTO_MISMATCH** | Reply-To domain differs from From domain | Medium (10) | From: `bank@legit.com`, Reply-To: `verify@different.net` |
+| **URGENT_LANGUAGE** | Contains urgent/pressure language | Medium (10) | "immediate action", "expires today", "suspend account" |
+| **URL_SHORTENER** | Contains shortened URLs | Medium (10) | `bit.ly`, `tinyurl.com`, `t.co` links |
+| **SUSPICIOUS_TLDS** | Suspicious top-level domains | Medium (10) | `.top`, `.xyz`, `.click` domains |
+| **UNICODE_SPOOF** | Unicode spoofing attempts | Medium (10) | Non-ASCII characters in domains |
+| **NO_PERSONALIZATION** | Generic greetings without personalization | Low (5) | "Dear Customer", "Valued User" |
+| **ATTACHMENT_KEYWORDS** | Attachment mentions with suspicious links | Low (5) | "invoice", "payment" keywords with URLs present |
+
+*See [test fixtures](tests/fixtures/) for real examples of these rules in action.*
+
 ### 🛡️ Security Features
 - **Secure File Upload**: Type validation, size limits, malware protection
 - **Rate Limiting**: API abuse prevention (10 requests/min per IP)
