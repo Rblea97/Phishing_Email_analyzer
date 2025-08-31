@@ -66,7 +66,7 @@ class BatchProcessingError(Exception):
     pass
 
 # Initialize Celery app
-def create_celery_app() -> Optional[Celery]:
+def create_celery_app() -> Optional['Celery']:
     """Create and configure Celery application"""
     if not CELERY_AVAILABLE:
         logger.warning("Celery not available - batch processing will be limited")
