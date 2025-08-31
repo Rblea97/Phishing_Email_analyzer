@@ -1,4 +1,5 @@
 # 🛡️ AI-Powered Phishing Detection System
+## 🎓 Computer Science Portfolio Project by Richard Blea
 
 [![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
 [![Flask](https://img.shields.io/badge/Flask-3.0.0-green)](https://flask.palletsprojects.com/)
@@ -7,17 +8,31 @@
 [![Tests](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/Rblea97/Phishing_Email_analyzer/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/badge/Coverage-83%25-yellow)](docs/evaluation.md)
 [![Security](https://img.shields.io/badge/Security-First-red)](docs/SECURITY.md)
-[![Release](https://img.shields.io/badge/Release-v1.0.1-green)](https://github.com/Rblea97/Phishing_Email_analyzer/releases)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Richard%20Blea-blue)](https://www.linkedin.com/in/richard-blea-748914159)
 
-> **Advanced cybersecurity tool combining rule-based detection with AI analysis to identify phishing emails with high accuracy and detailed evidence reporting.**
+> **Academic capstone project demonstrating advanced cybersecurity, AI/ML integration, and full-stack development skills. Built as a comprehensive phishing detection system combining rule-based analysis with OpenAI GPT-4o-mini for intelligent threat assessment.**
 
-## 🎯 Overview
+### 👨‍💻 About the Developer
+**Richard Blea** | CU Denver Computer Science Student | Cybersecurity Professional in Training  
+📧 [rblea97@gmail.com](mailto:rblea97@gmail.com) | 💼 [LinkedIn](https://www.linkedin.com/in/richard-blea-748914159) | 📍 Denver, CO | 🎓 Graduating Spring 2026  
+**Seeking entry-level cybersecurity positions: SOC Analyst, Information Security Analyst**
 
-This project demonstrates sophisticated phishing detection capabilities using a dual-analysis approach:
+## 🎯 Project Overview
+
+This personal cybersecurity project showcases advanced computer science skills through a sophisticated phishing detection system. Developed during Fall 2025 semester and inspired by coursework in mobile security at CU Denver, it demonstrates my ability to integrate modern AI technologies with traditional cybersecurity approaches.
+
+### 🎓 Skills Development Focus
+- **Threat Detection & Analysis**: Email security protocols, phishing pattern recognition, incident response
+- **Security Operations**: Rule-based detection engines, log analysis, evidence collection and documentation
+- **Network Security**: Email header analysis, SPF/DKIM/DMARC authentication, suspicious domain identification
+- **Security Tools & Automation**: Python scripting for security analysis, API integration, automated threat assessment
+- **Incident Documentation**: Detailed evidence reporting, risk scoring methodologies, security documentation practices
+
+### 🔧 Technical Implementation
 - **Rule-Based Engine**: 9 weighted detection rules with evidence collection
 - **AI Analysis**: GPT-4o-mini integration with structured cybersecurity prompts
 - **Professional Interface**: Bootstrap-powered dashboard with tabbed results
-- **Production Ready**: Rate limiting, cost monitoring, and comprehensive security
+- **Enterprise Features**: Rate limiting, cost monitoring, and comprehensive security
 
 ## 🎬 Live Demo
 
@@ -267,15 +282,25 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🏆 Project Highlights
+## 🏆 Cybersecurity Skills Demonstrated
 
-This project demonstrates:
-- **AI/ML Integration**: Production-ready OpenAI GPT integration
-- **Cybersecurity Expertise**: Advanced threat detection and analysis
-- **Full-Stack Development**: Complete web application with professional UI
-- **Security-First Design**: Comprehensive security controls and monitoring
-- **Production Readiness**: Deployment configuration, testing, documentation
-- **Cost Optimization**: Efficient AI usage with monitoring and controls
+### 🔍 Security Analysis & Threat Detection
+- **Email Security Analysis**: Header parsing, authentication protocol validation (SPF/DKIM/DMARC)
+- **Phishing Detection**: Pattern recognition, suspicious URL analysis, social engineering identification
+- **Incident Investigation**: Evidence collection, threat scoring, detailed documentation of findings
+- **Risk Assessment**: 0-100 scoring methodology, confidence level calculation, threat categorization
+
+### 🛡️ Security Operations Center (SOC) Relevant Skills  
+- **Automated Detection**: Rule-based engine development, alert generation, false positive reduction
+- **Log Analysis**: Email header examination, authentication results parsing, anomaly detection
+- **Threat Intelligence**: Suspicious domain identification, URL shortener analysis, Unicode spoofing detection
+- **Response Documentation**: Structured evidence reporting, playbook development, incident tracking
+
+### 🔧 Technical Security Tools
+- **Python Security Scripting**: Automated analysis tools, API integration, data parsing
+- **Security Testing**: Comprehensive test coverage (83%), vulnerability assessment methodologies
+- **Database Security**: Secure data handling, audit trail implementation, privacy protection
+- **Deployment Security**: Rate limiting, input validation, secure configuration management
 
 ## 📚 Comprehensive Documentation
 
@@ -297,13 +322,28 @@ All claims in this README are backed by detailed documentation with implementati
 
 *All documentation includes implementation references, test validation, and external standard compliance.*
 
-## 📞 Support
+## 🚀 For Security Professionals & Hiring Managers
 
-- **Issues**: [GitHub Issues](https://github.com/Rblea97/Phishing_Email_analyzer/issues)
-- **Documentation**: [Complete Documentation](docs/) - All claims backed by detailed analysis
-- **Security**: [Security Policy](docs/SECURITY.md) - Comprehensive security implementation
-- **Privacy**: [Privacy Compliance](docs/privacy-compliance.md) - GDPR/CCPA compliance documentation
+### 📋 Cybersecurity Portfolio Summary
+- **Threat Analysis Expertise**: Multi-layered phishing detection combining rule-based analysis with AI assessment
+- **SOC-Ready Skills**: Automated detection, evidence collection, incident documentation, risk scoring
+- **Technical Proficiency**: Python security scripting, email security protocols, threat intelligence analysis
+- **Quality Assurance**: 83% test coverage, comprehensive documentation, production-ready deployment
+- **Education**: CU Denver Computer Science (Spring 2026) + Cybersecurity & Defense Certificate
+
+### 📞 Contact Richard Blea
+- **Location**: Denver, CO (willing to relocate)
+- **Email**: [rblea97@gmail.com](mailto:rblea97@gmail.com)
+- **LinkedIn**: [linkedin.com/in/richard-blea-748914159](https://www.linkedin.com/in/richard-blea-748914159)
+- **Target Roles**: SOC Analyst, Information Security Analyst, Cybersecurity Analyst
+- **Availability**: Graduating Spring 2026, seeking entry-level cybersecurity positions
+
+### 📚 Technical Documentation
+- **[Complete Documentation](docs/)** - All technical implementations with detailed analysis
+- **[Security Policy](docs/SECURITY.md)** - Comprehensive security implementation
+- **[Architecture](docs/architecture.md)** - System design and scalability considerations
+- **[Test Results](docs/evaluation.md)** - Quality assurance and performance metrics
 
 ---
 
-*Built with ❤️ using Flask, OpenAI GPT-4o-mini, and security-first development practices*
+*🎓 Academic project showcasing industry-ready development practices and modern technology integration*

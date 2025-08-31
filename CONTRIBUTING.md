@@ -1,6 +1,17 @@
 # Contributing to AI-Powered Phishing Detection System
 
-Thank you for your interest in contributing to this cybersecurity project! This guide will help you get started.
+Thank you for your interest in this academic portfolio project by Richard Blea! While this repository primarily serves as a demonstration of computer science and cybersecurity skills, contributions and feedback are welcome.
+
+## 🎓 About This Project
+
+This is a **student portfolio project** created to demonstrate:
+- Advanced Python development and testing practices
+- AI/ML integration with OpenAI GPT-4o-mini
+- Cybersecurity knowledge and implementation
+- Full-stack web development skills
+- Production-ready deployment and monitoring
+
+**Developer**: Richard Blea ([rblea97@gmail.com](mailto:rblea97@gmail.com) | [LinkedIn](https://www.linkedin.com/in/richard-blea-748914159))
 
 ## 🚀 Quick Start for Contributors
 
@@ -9,11 +20,28 @@ Thank you for your interest in contributing to this cybersecurity project! This 
 - Git
 - OpenAI API key for testing AI features
 
+## 🎯 Types of Contributions Welcome
+
+### 💼 For Recruiters & Employers
+- **Code Review**: Technical feedback on implementation approaches
+- **Architecture Discussion**: Suggestions for scaling or optimization
+- **Interview Opportunities**: This project demonstrates real-world skills ready for professional application
+
+### 🎓 For Fellow Students & Developers
+- **Learning Exchange**: Discussion of cybersecurity concepts and implementation
+- **Technical Improvements**: Bug fixes, performance optimizations, security enhancements
+- **Documentation**: Improvements to explanations and technical documentation
+
+### 🔒 For Security Professionals
+- **Rule Enhancement**: Additional phishing detection patterns
+- **Security Review**: Identification of potential vulnerabilities or improvements
+- **Best Practices**: Feedback on cybersecurity implementation approaches
+
 ### Development Setup
 
 1. **Fork and Clone**
    ```bash
-   git clone https://github.com/yourusername/Phishing_Email_analyzer.git
+   git clone https://github.com/Rblea97/Phishing_Email_analyzer.git
    cd Phishing_Email_analyzer
    ```
 
