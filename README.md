@@ -18,6 +18,9 @@
 > 
 > **Academic cybersecurity project showcasing advanced software engineering, AI/ML integration, microservices architecture, and production deployment skills. Demonstrates my ability to build scalable, production-ready security systems with real-time threat intelligence, batch processing, caching, and comprehensive monitoring.**
 
+**👨‍🎓 Richard Blea** | [LinkedIn](https://www.linkedin.com/in/richard-blea-748914159) | rblea97@gmail.com  
+*Computer Science Graduate | Cybersecurity & Defense Certificate | Security+ Certification in Progress*
+
 ### 👨‍💻 About the Developer
 **Richard Blea** | CU Denver Computer Science Student | Cybersecurity Professional in Training  
 📧 [rblea97@gmail.com](mailto:rblea97@gmail.com) | 💼 [LinkedIn](https://www.linkedin.com/in/richard-blea-748914159) | 📍 Denver, CO | 🎓 Graduating Spring 2026  
@@ -375,6 +378,28 @@ All claims in this README are backed by detailed documentation with implementati
 
 *All documentation includes implementation references, test validation, and external standard compliance.*
 
+## 🔗 Complete Cybersecurity Portfolio
+
+### **Security Analysis & Threat Detection**
+**[Phishing Email Analyzer](https://github.com/Rblea97/Phishing_Email_analyzer)** ⭐ *This Repository*  
+*Advanced AI-powered email security analysis with microservices architecture and threat intelligence integration*
+
+### **Enterprise Security Operations**  
+**[SOC Laboratory](https://github.com/Rblea97/Enterprise-SOC-Laboratory)** - Complete SOC analyst training environment  
+*Advanced security monitoring with Splunk SIEM, Active Directory, and Windows Event Forwarding*  
+**Skills Bridge**: Automated threat detection capabilities complement enterprise security monitoring operations
+
+### **Software Engineering Foundation**
+**[Algorithm Visualizer](https://github.com/Rblea97/Algorithm-Visualizer)** - Professional desktop application with security-focused design  
+*Advanced Python development with MVC architecture, input validation, and defensive programming*  
+**Skills Bridge**: Software engineering fundamentals essential for building custom security tools and automation
+
+### **Portfolio Narrative: Software to Security**
+**Programming Excellence** → **Security Application** → **Enterprise Implementation**  
+*Demonstrates comprehensive technical progression from software engineering fundamentals through applied cybersecurity to enterprise security operations*
+
+---
+
 ## 🚀 For Security Professionals & Hiring Managers
 
 ### 📋 Cybersecurity Portfolio Summary
@@ -384,12 +409,19 @@ All claims in this README are backed by detailed documentation with implementati
 - **Quality Assurance**: 83% test coverage, comprehensive documentation, production-ready deployment
 - **Education**: CU Denver Computer Science (Spring 2026) + Cybersecurity & Defense Certificate
 
-### 📞 Contact Richard Blea
-- **Location**: Denver, CO (willing to relocate)
-- **Email**: [rblea97@gmail.com](mailto:rblea97@gmail.com)
-- **LinkedIn**: [linkedin.com/in/richard-blea-748914159](https://www.linkedin.com/in/richard-blea-748914159)
-- **Target Roles**: SOC Analyst, Information Security Analyst, Cybersecurity Analyst
-- **Availability**: Graduating Spring 2026, seeking entry-level cybersecurity positions
+### 📞 Professional Contact
+
+**Richard Blea**  
+📧 rblea97@gmail.com  
+💼 [LinkedIn: richard-blea-748914159](https://www.linkedin.com/in/richard-blea-748914159)  
+🎓 Computer Science, CU Denver | Cybersecurity & Defense Certificate  
+📋 Security+ Certification (In Progress)  
+📍 Denver, CO (willing to relocate)
+
+**Target Roles**: SOC Analyst, Information Security Analyst, Cybersecurity Analyst, Security Engineer  
+**Availability**: Graduating Spring 2026, seeking entry-level cybersecurity positions
+
+*Demonstrating practical cybersecurity expertise through hands-on security analysis and enterprise laboratory experience*
 
 ### 📚 Technical Documentation
 - **[Complete Documentation](docs/)** - All technical implementations with detailed analysis
